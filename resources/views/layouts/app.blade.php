@@ -23,7 +23,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="home" >
+                <a class="navbar-brand" href="instructorhome" >
                     <div><img src="/svg/cloudclicker.png"> </div>
                     <!-- Laravek starts in public so its just /svg/logo -->
                     
