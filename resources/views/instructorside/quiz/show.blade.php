@@ -63,22 +63,30 @@
                 </div>
 
 </div>
-<!-- The Quiz itself-->
 <div class = "container">
     <div class="jumbotron">
-        <div class="row">
-                <div class="col-md-8">
+    <div class="col-md-8">
+<!-- The Quiz itself-->
+@foreach($quiz -> tfquestion as $question)
+            
+            <h3> Question</h3>
+            <div class="question"> <b> {{$question->question_text}}</b> </div>
 
-                        <div class="quiz-container">
-                            <div id="quiz"> </div>
-                        </div>
+            <label>
+                <input type="radio" name="q" value="v">
+                  True
+              </label>
+              <label>
+                <input type="radio" name="q" value="v">
+                  False
+              </label>
+                    <br>
+                    <br>
 
-                        <div id="results"></div>
-                </div>
-            </div>
-    </div>           
-</div>     
-
+@endforeach
+</div>
+</div>           
+</div> 
 <!-- Button trigger modal -->
 
     
@@ -90,8 +98,7 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     
-<script src="storage/js/quiz/StudentClickQuiz.js"> </script>
-    <!-- Optional JavaScript -->
+
     
 </body>
 @endsection

@@ -40,6 +40,6 @@ class User extends Authenticatable
     ];
 
     public function quiz() {
-        return $this->hasMany(Quiz::class)->orderBy('created_at', 'DESC');
+        return $this->hasMany(Quiz::class);
     }
-}
+} 

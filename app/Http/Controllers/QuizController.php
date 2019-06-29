@@ -23,14 +23,35 @@ class QuizController extends Controller
             'quiz_weight' => 'required'
         ]);
         //need to get authenticated user
-        auth()->user()->quiz()->create($data); 
+        $quiz = auth()->user()->quiz()->create($data); 
 
-        //dd(request()->all());
+        //dd($quiz);
 
-        return redirect('instructorquizlist'. auth()->user()->id); //. auth()->user()->id
+        return redirect($quiz->id.'/question/create'); //. auth()->user()->id
     }
 
     public function show(\App\Quiz $quiz){
         return view('instructorside.quiz.show', compact('quiz'));
+    }
+
+    public function edit(\App\Quiz $quiz){
+        return view('instructorside/quiz/edit', compact('quiz'));
+    }
+
+    public function update(\App\Quiz $quiz){
+        $data = request()->validate(
+            ['quiz_name' => '',
+            'quiz_weight' => '',
+            ]
+        );
+
+        $quiz-> update($data);
+
+        //auth()->user()->quiz()->update($data);
+
+        //dd(auth()->user()->quiz->where('id',$quiz->id));
+
+        //return redirect('instructorquizlist/'. auth()->user()->id);
+        return redirect($quiz->id.'/question/create');
     }
 }

@@ -17,7 +17,7 @@
                     @foreach($user -> quiz as $quiz)
                         <tr>
                             <td>
-                                <a href="/q/{{$quiz->id}}" >
+                                <a href="/q/{{$quiz->id}}/edit" >
                                     {{$quiz->quiz_name}} - ( {{$quiz->quiz_weight}} %)
                                 </a>
                             </td>

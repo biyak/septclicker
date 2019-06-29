@@ -18,7 +18,9 @@ class InstructorQuizListController extends Controller
      */
     public function index($user)
     {
-        $user = \App\User::findOrFail($user);
+        $user = auth()->user();
+        //$this->authorize('view', $user->profile);
+        //dd($user->profile);
         return view('instructorside/quiz/instructorquizlist', ['user' => $user]);
     }
 

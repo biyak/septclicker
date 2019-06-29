@@ -37,15 +37,20 @@ Route::get('/instructorquizlist/{user}', 'InstructorQuizListController@index')->
 
 Route::get('/instructorprlist', 'InstructorPRListController@index')->name('InstructorPRList');
 
-Route::get('/createquiz', 'CreateQuizController@index')->name('CreateQuiz');
-
 Route::get('/createpr', 'CreatePRController@index')->name('CreatePR');
 
 //Creating and displaying quizzes!
 Route::get('/q/create', 'QuizController@create');
 Route::post('/q', 'QuizController@store');
-
 Route::get('/q/{quiz}', 'QuizController@show');
+
+//Editing quiz
+Route::get('/q/{quiz}/edit', 'QuizController@edit')->name('{quiz}.edit');
+Route::patch('/q/{quiz}/', 'QuizController@update')->name('{quiz}.update');
+
+//Creating and displaying questions
+Route::get('{quiz}/question/create', 'TFQuestionController@create');
+Route::post('{quiz}/question', 'TFQuestionController@store');
 
 Route::get('/testbank', 'TestBankController@index')->name('TestBank');
 

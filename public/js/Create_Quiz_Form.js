@@ -67,7 +67,7 @@ $(function(){
     function reloadScript(){
         $('#scriptBtn').remove();
         var script = document.createElement('script');
-        script.src = 'js/Create_Quiz_Btns.js';
+        script.src = '../js/Create_Quiz_Btns.js';
         script.id = 'scriptBtn';
         var body = document.getElementsByTagName('body')[0];
         body.appendChild(script);
@@ -149,7 +149,7 @@ $(function(){
         xhr.send(qDataArrayJSON);
         console.log(xhr.readyState);*/
         //We will try ajax
-        $.post('Create_Quiz_Form.php', qDataArrayJSON, function(data, status){
+        $.post('/q', qDataArrayJSON, function(data, status){
             console.log(data + 'and staus is' + status);
         });
     });

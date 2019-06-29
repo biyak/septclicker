@@ -11,4 +11,8 @@ class Quiz extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
+
+    public function tfquestion() {
+        return $this->hasMany(TFQuestion::class)->orderBy('created_at', 'ASC');
+    }
 }

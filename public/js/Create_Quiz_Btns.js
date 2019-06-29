@@ -3,7 +3,7 @@ $(function(){
     function reloadMatchScript(){
         $('#scriptMatchBtn').remove();
         var matchScript = document.createElement('script');
-        matchScript.src = 'js/matchBtns.js';
+        matchScript.src = '../js/matchBtns.js';
         matchScript.id = 'scriptMatchBtn';
         var body = document.getElementsByTagName('body')[0];
         body.appendChild(matchScript);
