@@ -13,7 +13,7 @@ class QuizController extends Controller
     } 
 
     public function create(){
-        return view('instructorside/quiz/create');
+        return view('instructor/quiz/create');
     }
 
     public function store(){
@@ -31,11 +31,11 @@ class QuizController extends Controller
     }
 
     public function show(\App\Quiz $quiz){
-        return view('instructorside.quiz.show', compact('quiz'));
+        return view('instructorquiz.show', compact('quiz'));
     }
 
     public function edit(\App\Quiz $quiz){
-        return view('instructorside/quiz/edit', compact('quiz'));
+        return view('instructor/quiz/edit', compact('quiz'));
     }
 
     public function update(\App\Quiz $quiz){

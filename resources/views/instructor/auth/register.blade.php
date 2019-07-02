@@ -24,6 +24,20 @@
                             </div>
                         </div>
 
+                        <div class="form-group{{ $errors->has('mcmaster_id') ? ' has-error' : '' }}">
+                            <label for="mcmaster_id" class="col-md-4 control-label">McMaster ID</label>
+
+                            <div class="col-md-6">
+                                <input id="mcmaster_id" type="text" class="form-control" name="mcmaster_id" value="{{ old('mcmaster_id') }}" autofocus>
+
+                                @if ($errors->has('mcmaster_id'))
+                                    <span class="help-block">
+                                        <strong>{{ $errors->first('mcmaster_id') }}</strong>
+                                    </span>
+                                @endif
+                            </div>
+                        </div>
+
                         <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 

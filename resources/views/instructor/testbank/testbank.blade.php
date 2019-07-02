@@ -1,0 +1,103 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+        <div class="jumbotron">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2> Course Code Test Bank</h2>
+                        <p>Instructor: xxxxx xxxxx </p>
+                        <p> Here you will find all previous tests and questions, 
+                            including any tests not yet administered. </p> 
+                            <p>Add questions to the test bank
+                          or select the questions from below and click Create to create your own quiz.
+                            </p>
+                            <button type="button" class="btn btn-primary btn-space" >
+                                    Add Question
+                            </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- The Questions int heir own jumbotrons-->
+
+<div class="TestBank">
+    <div id="TestBank"> </div>
+</div>
+
+<!-- <div class="container" >
+ 
+<div class="jumbotron">
+    <div class="row">
+            <div class="col-md-12">
+                
+                <div id="AddQuestion">
+
+                </div>
+
+            </div>
+    </div>
+    </div>
+</div> -->
+
+<div class="container">
+        <div class="jumbotron">
+            <div class="row">
+                    <button type="button" class="btn btn-primary btn-space" id="AddQuestionBtn">
+                            Add Question
+                    </button>
+                <button type="button" class="btn btn-primary btn-space" data-toggle="modal" data-target="#exampleModal">
+                        Create Quiz
+                </button>
+                <!-- <iframe src="AddQuestion.html" height="300" width=100%></iframe> -->
+            </div>
+        </div>
+    </div>
+</div>
+<div id="results"></div>
+
+
+    
+
+<!-- Button trigger modal -->
+
+      
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to create this quiz?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              ~ Review of their input ~
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Review Selection</button>
+              <a href = "CreateNewQuiz.html"> <button type="button"  id = "submit" class="btn btn-primary" > 
+                
+                   Create Quiz
+               </button> </a> 
+            </div>
+          </div>
+        </div>
+      </div>
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"></script>
+    <script src="js/testbank/TestBank.js"> </script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+ 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+@endsection

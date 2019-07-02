@@ -12,7 +12,7 @@ class TFQuestionController extends Controller
     } 
 
     public function create(\App\Quiz $quiz){
-        return view('instructorside.quiz.addquestion', compact('quiz'));
+        return view('instructor.quiz.addquestion', compact('quiz'));
     }
 
     public function store(\App\Quiz $quiz){
@@ -25,11 +25,11 @@ class TFQuestionController extends Controller
         ]);
         //need to get authenticated user
         $quiz->tfquestion()->create($data);
-        return view('instructorside.quiz.addquestion', compact('quiz'));
+        return view('instructor.quiz.addquestion', compact('quiz'));
     }
 
 
     // public function show(\App\Quiz $quiz){
-    //     return view('instructorside.quiz.addquestion', compact('quiz'));
+    //     return view('instructor.quiz.addquestion', compact('quiz'));
     // }
 }

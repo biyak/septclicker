@@ -52,6 +52,7 @@ class RegisterController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:instructors',
             'password' => 'required|min:6|confirmed',
+            'mcmaster_id' => 'required|max:9|min:9',
         ]);
     }
 
@@ -67,6 +68,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'mcmaster_id' => $data['mcmaster_id']
         ]);
     }
 

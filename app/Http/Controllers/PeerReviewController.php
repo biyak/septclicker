@@ -13,6 +13,6 @@ class PeerReviewController extends Controller
 
     public function index()
     {
-        return view('studentside/pr/peerreview');
+        return view('student/pr/peerreview');
     }
 }

@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    SeptClicker
+                    SEPTClicker
                 </div>
 
                 <!-- <div class="links">

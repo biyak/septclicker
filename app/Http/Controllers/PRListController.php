@@ -13,7 +13,7 @@ class PRListController extends Controller
 
     public function index()
     {
-        return view('studentside/pr/PRList');
+        return view('student/pr/PRList');
     }
 
 }

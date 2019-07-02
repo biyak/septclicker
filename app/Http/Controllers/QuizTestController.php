@@ -13,6 +13,6 @@ class QuizTestController extends Controller
 
     public function index()
     {
-        return view('studentside/quiz/QuizTest');
+        return view('student/quiz/QuizTest');
     }
 }

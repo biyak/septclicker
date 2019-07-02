@@ -7,10 +7,6 @@ use Illuminate\Http\Request;
 class InstructorHomeController extends Controller
 {
 
-   public function __construct()
-   {
-       $this->middleware('auth');
-   }
 
    /**
     * Show the application dashboard.
@@ -19,6 +15,6 @@ class InstructorHomeController extends Controller
     */
    public function index()
    {
-       return view('instructorside/instructorhome');
+       return view('instructor/instructorhome');
    }
 }

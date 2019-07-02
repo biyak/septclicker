@@ -16,7 +16,7 @@ class Instructor extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'mcmaster_id',
     ];
 
     /**
@@ -37,5 +37,9 @@ class Instructor extends Authenticatable
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new InstructorResetPassword($token));
+    }
+
+    public function quiz() {
+        return $this->hasMany(Quiz::class);
     }
 }
