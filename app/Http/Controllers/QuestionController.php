@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class TFQuestionController extends Controller
+class QuestionController extends Controller
 {
     public function __construct()
     {
@@ -21,14 +21,22 @@ class TFQuestionController extends Controller
             'question_text' => 'required',
             'question_ans' => 'required',
             'image' => '',
-            'quiz_id' => ''
+            'quiz_id' => '',
+            'option_a' => '',
+            'option_b' => '',
+            'option_c' => '',
+            'option_d' => '',
+            'option_e' => '',
+            
         ]);
-        //need to get authenticated user
-        $quiz->tfquestion()->create($data);
+        //Takes the quiz we are working on tht was passed into the create function
+        //Create a new question object with question()
+        //And add the data to the new question for the quiz we're working on
+        $quiz->question()->create($data);
         return view('instructorside.quiz.addquestion', compact('quiz'));
     }
 
-    public function edit(\App\Quiz $quiz, \App\TFQuestion $question){
+    public function edit(\App\Quiz $quiz, \App\Question $question){
         return view('instructorside/quiz/question/edit', compact('quiz', 'question'));
     }
 
@@ -36,20 +44,27 @@ class TFQuestionController extends Controller
     //     return view('instructorside.quiz.addquestion', compact('quiz'));
     // }
 
-    public function update(\App\Quiz $quiz, \App\TFQuestion $question){
+    public function update(\App\Question $question){
         $data = request()->validate(
-            ['quiz_name' => '',
-            'quiz_weight' => '',
+            ['question_text' => '',
+            'question_ans' => '',
+            'image' => '',
+            'quiz_id' => '',
+            'option_a' => '',
+            'option_b' => '',
+            'option_c' => '',
+            'option_d' => '',
+            'option_e' => '',
             ]
         );
 
-        $quiz-> update($data);
+        $question-> update($data);
 
         //auth()->user()->quiz()->update($data);
 
         //dd(auth()->user()->quiz->where('id',$quiz->id));
 
         //return redirect('instructorquizlist/'. auth()->user()->id);
-        return redirect($quiz->id.'/question/create');
+        //return redirect('question');
     }
 }

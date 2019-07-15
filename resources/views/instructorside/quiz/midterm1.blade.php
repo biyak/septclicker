@@ -43,39 +43,59 @@
             
 <body>
 
-<!-- Quiz info header-->
+            
 <div class = "container">
-        <div class = "jumbotron"> 
-            <div class= "row"> 
-                    
-                    <div class="col-md-8">
-                        <h2>Quiz Name</h2>
-                            <p>Instructor: xxxxx xxxxx Time: xx:xx:xx Weight: xx%</p>
+                    <div class = "jumbotron"> 
+                        <div class= "row"> 
+                                <div class="col-md-8">
+                                    <h2> {{$quiz->quiz_name}} </h2>
+                                        <p>Instructor: {{$quiz->user->name}} </p>
+                                        <p> Weight: {{$quiz->quiz_weight}}%</p>
+                                        <p> You cannot come back to this question once you have clicked Next.</p>
+                                </div>
+                        </div>
                     </div>
-            </div>
-        </div>
-    </div>
+                </div>
 
 </div>
-<!-- The Quiz itself-->
 <div class = "container">
     <div class="jumbotron">
-        <div class="row">
-                <div class="col-md-8">
+    <div class="col-md-8">
+<!-- The Quiz itself-->
 
-                        <div class="quiz-container">
-                            <div id="quiz"> </div>
-                        </div>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                Submit
-                        </button>
+$num = 1;
 
-                        <div id="results"></div>
-                </div>
-            </div>
-    </div>           
-</div>     
+@foreach($quiz -> tfquestion as $question)
+            
+            <h3> Question $num</h3>
+            <div class="question"> <b> {{$question->question_text}}</b> </div>
 
+            <label>
+                <input type="radio" name="q" value="v">
+                  True
+              </label>
+              <label>
+                <input type="radio" name="q" value="v">
+                  False
+              </label>
+                    <br>
+                    <br>
+            $num=$num+1
+
+@endforeach
+
+</div>
+</div>           
+</div> 
+<!-- Button trigger modal -->
+<div class="container">
+<div class ="jumbotron">
+<a href = "#"> <button type="button" class="btn btn-primary" > 
+                
+                Launch quiz
+           </button> </a> 
+</div>
+</div>
 <!-- Button trigger modal -->
 
       

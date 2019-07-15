@@ -21,7 +21,7 @@ Route::get('/profile/{user}', 'ProfilesController@index')->name('profile.show');
 
 Route::get('/studenthome', 'HomeController@index')->name('Home');
 
-Route::get('/quizlist', 'QuizListController@index')->name('QuizList');
+Route::get('/quizlist/{user}', 'QuizListController@index')->name('QuizList');
 
 Route::get('/quiztest', 'QuizTestController@index')->name('QuizTest');
 
@@ -48,10 +48,23 @@ Route::get('/q/{quiz}', 'QuizController@show');
 Route::get('/q/{quiz}/edit', 'QuizController@edit')->name('{quiz}.edit');
 Route::patch('/q/{quiz}/', 'QuizController@update')->name('{quiz}.update');
 
+
 //Creating and displaying questions
-Route::get('{quiz}/question/create', 'TFQuestionController@create');
-Route::post('{quiz}/question', 'TFQuestionController@store');
+Route::get('{quiz}/question/create', 'QuestionController@create');
+Route::post('{quiz}/question', 'QuestionController@store');
+Route::get('question/{question}/q', 'QuestionController@show');
+
+//Editing question
+Route::get('question/{question}/edit', 'QuestionController@edit')->name('{question}.edit');
+Route::patch('question/{question}/q', 'QuestionController@update')->name('{question}.update');
+
 
 Route::get('/testbank', 'TestBankController@index')->name('TestBank');
 
 Route::get('midterm1', 'Midterm1Controller@index')->name('M1');
+
+//Displaying quizzes for students
+Route::get('/active/{quiz}/conf', 'ActiveQuizController@create')->name('ActiveQuiz');
+Route::get('/active/{quiz}/show', 'ActiveQuizController@show')->name('ActiveQuiz');
+Route::post('/active', 'QuizController@store');
+

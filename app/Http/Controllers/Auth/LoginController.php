@@ -25,7 +25,14 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/instructorhome';
+
+     public function index() {
+        if (auth()->user()->isInstructor()){
+            $redirectTo = '/instructorhome';
+        }   
+        else
+            {$redirectTo = '/studenthome';}
+     }
 
     /**
      * Create a new controller instance.

@@ -70,7 +70,7 @@
 $num=1
 @endphp
 @foreach($quiz -> question as $question)
-    <div > <a href="/question/{{$question->id}}/edit" >
+    <div > <a href="/{{$quiz->id}}/question/{{$question->id}}/edit" >
             <h3> Question {{$num}}</h3>
             <div class="question"> <b> {{$question->question_text}}</b> </div>
         

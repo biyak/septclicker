@@ -1,48 +1,7 @@
+
 @extends('layouts.app')
 
 @section('content')
-<head>
-    <title>Quiz List</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <style>
-
-
-        .jumbotron {
-            background-color: #d1d3d3
-        }
-
-        .card-img-top {
-            width: 100%;
-            height: 14.85rem;
-            object-fit: cover;
-        }
-        table {
-            font-family: arial, sans-serif;
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        td, th {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
-        }
-
-        tr:nth-child(even) {
-            background-color: #dddddd;
-        }
-        .capitalize { text-transform: capitalize; }
-    </style>
-    
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-</head>
 
 <body>
         <div class="container">
@@ -55,20 +14,18 @@
 
                      </h3>
                      <table id="activequiztable"  style = "display:block;">
+                    @foreach(Auth::user() -> quiz as $quiz)
                         <tr>
                             <td>
-                                <a href="quizinteractive" >
-                                    4C03 Quiz 7 (Interactive Quiz)
+                                <a href="/active/{{$quiz->id}}/{{Auth::user()->id}}/show" >
+                                    {{$quiz->quiz_name}} - ( {{$quiz->quiz_weight}} %)
                                 </a>
                             </td>
                         </tr>
-                        <tr>
-                            <td>
-                                <a href="quiztest"  >
-                                    3MI3 Midterm 2
-                                </a>
-                            </td>
-                        </tr>
+
+                    @endforeach
+
+
                      </table>
 
                 </div>
@@ -76,7 +33,7 @@
 
                 <div id="activequiz">
                 <h3> 
-                    Past Quizzes 
+                    Inactive Quizzes 
                     <button id="pastbutton" class="btn btn-outline-primary btn-sm" onclick = "clickhidePast()"> - </button>
 
                 </h3> 
@@ -108,7 +65,12 @@
                         </tr>
                      </table>
                 </div>
+<!-- 
+                <div class="text-right"> 
+             <a href="/q/create"> Create New Quiz</a>
+                 </div> -->
         </div>
+
 
         </body>
     <!-- Optional JavaScript -->
@@ -148,4 +110,6 @@
         }
     </script>
 </body>
+
+
 @endsection

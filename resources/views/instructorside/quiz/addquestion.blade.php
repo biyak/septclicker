@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="Create_Quiz_Form.css">
+
     <!--<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>-->
     <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
 
@@ -17,9 +17,10 @@
   <body>
 
     <!--Heading and Menu-->
-
-    <div class="container whiteTxt pb-4 pt-5"><h1>Create Question</h1></div>
+   <div class="container whiteTxt pb-4 pt-5">
     <div class="jumbotron">
+    <div><h1>Create Question</h1></div>
+ 
 
 
         <form action="/{{$quiz->id}}/question" method="post" enctype="multipart/form-data">
@@ -31,46 +32,80 @@
                 <!--The following button is for testing and debugging purposes only
                 <button type="button" class="btn btn-default test2-btn" data-testBtnId="1">Add Q2 Type</button>-->
         
-                <div class="container" id="question1Container">
-                    
-                    <div class="form-group row pb-2">
-                        <label class="col-2 col-form-label">Time Limit</label>
+                <div id="questionsCont"> 
+                    <div class="form-group row">
+                        <label class="col-2 col-form-label text-center">Time Limit</label>
                         <div class="col-3">
-                            <input class="form-control" type="number" placeholder="Allowed time (seconds)" name="timeLimit1">
+                            <input class="form-control" type="number" placeholder="Allowed time (seconds)" name="timelimit">
                         </div>
                     </div>
     
-                    <div class="row pb-2">
-                        <label for="image" class="col-2 col-form-label">Add Image</label>
-                        <input type="file" class="col-4 form-control-file" name="image">
+                    <div class="row pb-3">
+                        <label for="image" class="col-2 col-form-label text-center">Add Image</label>
+                        <input type="file" class="col-4 form-control-file" name="image" accept="image/*">
                     </div>
                     
-                    <div class="container" id="typeCont1">
-                        <div class="container" id="tfCont1">
-                            <div class="form-group row">
-                                <label class="col-1 col-form-label">Question</label>
-                                <div class="col-10">
-                                    <input class="form-control" type="text" placeholder="True/False Statement" name="question_text">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-1"></div>
-                                <div class="radio col-2" style="padding-bottom:10px">
-                                <input type="text" max-length="1" name="question_ans" placeholder="T or F" pattern="[TFtf]" />
-                                </div>
+                    <div id="typeCont">
+                        
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label text-center">Question</label>
+                            <div class="col-9">
+                                <input class="form-control" type="text" name="question_text">
                             </div>
                         </div>
+            
+                        <div class="form-group row" style="padding-top:10px; padding-bottom:10px">
+                            <label class="col-2 col-form-label text-center">A</label>
+                            <div class="col-9">
+                                <input class="form-control" type="text" placeholder="Option A" name="option_a">
+                            </div>
+                        </div>
+            
+                        <div class="form-group row" style="padding-bottom:10px">
+                            <label class="col-2 col-form-label text-center">B</label>
+                            <div class="col-9">
+                                <input class="form-control" type="text" placeholder="Option B" name="option_b">
+                            </div>
+                        </div>
+            
+                        <div class="form-group row" style="padding-bottom:10px">
+                            <label class="col-2 col-form-label text-center">C</label>
+                            <div class="col-9">
+                                <input class="form-control" type="text" placeholder="Option C" name="option_c">
+                            </div>
+                        </div>
+            
+                        <div class="form-group row" style="padding-bottom:10px">
+                            <label class="col-2 col-form-label text-center">D</label>
+                            <div class="col-9">
+                                <input class="form-control" type="text" placeholder="Option D" name="option_d">
+                            </div>
+                        </div>
+            
+                        <div class="form-group row" style="padding-bottom:10px">
+                            <label class="col-2 col-form-label text-center">E</label>
+                            <div class="col-9">
+                                <input class="form-control" type="text" placeholder="Option E" name="option_e">
+                            </div>
+                        </div>
+
+                        <div class="form-group row" style="padding-bottom:10px">
+                            <label class="col-2 col-form-label text-center">Answer</label>
+                            <div class="col-3">
+                                <input class="form-control" max-length="1" type="text" placeholder="Correct Option" pattern="[ABCDEabcde]" name="question_ans">
+                            </div>
+                            <div class="col-7">
+                                    <p>Enter one letter from a-e that represents the correct option</p>
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
+            <div align="right" >
+            <a href="../../instructorhome"> <button type="button" class="btn btn-secondary" id="saveExitBtn">Exit</button> </a>
+             <button type="Submit" class="btn btn-success" id="saveAddQBtn">Save and Add Question</button>
+                <a href='../../q/{{$quiz->id}}'> <button type="button"class="btn btn-primary"> Create Quiz </button> </a>
             </div>
-
-            <div class="row" style="padding-top:10px; padding-bottom:20px">
-                <button type="submit" class="btn btn-primary btn-block" id="doneBtn">Save and add questions</button>
-            </div>
-            <div>
-                <a href='../../q/{{$quiz->id}}'> Create Quiz </a>
-            </div>
-        
         </form>
     </div>
     </div>
@@ -81,9 +116,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <script src="js/Create_Quiz_Form.js" id="script"></script>
-    <script src="js/Create_Quiz_Btns.js" id="scriptBtn"></script>
-    <script src="js/matchBtns.js" id="scriptMatchBtn"></script>
+
 
   </body>
 @endsection

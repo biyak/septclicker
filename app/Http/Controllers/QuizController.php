@@ -31,7 +31,7 @@ class QuizController extends Controller
     }
 
     public function show(\App\Quiz $quiz){
-        return view('instructorside.quiz.show', compact('quiz'));
+        return view('instructorside.quiz.question.show', compact('quiz'));
     }
 
     public function edit(\App\Quiz $quiz){

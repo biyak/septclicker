@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Welcome to your Dashboard, {{ Auth::user()->name }} !</div>    
+                <div class="card-header">Welcome to your Student Dashboard, {{ Auth::user()->name }} !</div>    
 
                 <div class="card-body">
                     @if (session('status'))
@@ -17,7 +17,7 @@
 
                     <!-- Ususally you echo out  but we can also use two curly braces-->
                     <div class="card-deck">
-                    <a href="/quizlist" class="card img-fluid " style="height: 15rem">
+                    <a href="/quizlist/{{ Auth::user()->id }}" class="card img-fluid " style="height: 15rem">
                         <img class="card-img-top" >
                         <div class="card-img-overlay">
                             <h1 class="card-title">Quiz List</h1>

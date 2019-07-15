@@ -42,4 +42,24 @@ class User extends Authenticatable
     public function quiz() {
         return $this->hasMany(Quiz::class);
     }
+
+    public function isInstructor()
+    {
+        $instructorRecord = \App\Instructor::where('user_id', $this->id)->first();
+        if ($instructorRecord) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function isStudent()
+    {
+        $studentRecord = \App\Student::where('user_id', $this->id)->first();
+        if ($studentRecord) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 } 
