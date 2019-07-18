@@ -16,6 +16,9 @@ class CreateActiveQuizzesTable extends Migration
         Schema::create('active_quizzes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
+            $table->unsignedBigInteger('student_id'); //foreign key for users
+
+            $table->foreign('student_id')->references('id')->on('student');
         });
     }
 
