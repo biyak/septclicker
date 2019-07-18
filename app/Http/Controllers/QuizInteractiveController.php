@@ -13,6 +13,6 @@ class QuizInteractiveController extends Controller
 
     public function index()
     {
-        return view('studentside/quiz/QuizInteractive');
+        return view('student/quiz/QuizInteractive');
     }
 }

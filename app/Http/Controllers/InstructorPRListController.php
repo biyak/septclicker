@@ -18,6 +18,6 @@ class InstructorPRListController extends Controller
      */
     public function index()
     {
-        return view('instructorside/pr/instructorprlist');
+        return view('instructor/pr/instructorprlist');
     }
 }

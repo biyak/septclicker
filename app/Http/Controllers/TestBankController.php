@@ -13,6 +13,6 @@ class TestBankController extends Controller
 
     public function index()
     {
-        return view('instructorside/testbank/testbank');
+        return view('instructor/testbank/testbank');
     }
 }

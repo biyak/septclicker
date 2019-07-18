@@ -13,7 +13,7 @@ class NewQuizController extends Controller
     } 
 
     public function create(){
-        return view('instructorside/quiz/create');
+        return view('instructor/quiz/create');
     }
 
     public function store(){
@@ -27,6 +27,6 @@ class NewQuizController extends Controller
 
         //dd(request()->all());
 
-        return redirect('instructorquizlist'); //. auth()->user()->id
+        return redirect('instructorlist'); //. auth()->user()->id
     }
 }

@@ -13,6 +13,6 @@ class Midterm1Controller extends Controller
 
     public function index()
     {
-        return view('instructorside/quiz/midterm1');
+        return view('instructor/quiz/midterm1');
     }
 }
