@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateActiveQuizzesTable extends Migration
+class CreateSubmittedQuestionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,14 @@ class CreateActiveQuizzesTable extends Migration
      */
     public function up()
     {
-        Schema::create('active_quizzes', function (Blueprint $table) {
+        Schema::create('submitted_questions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
+            $table->unsignedBigInteger('user_id'); // belongs to user 
+            $table->unsignedBigInteger('question_id');
+            $table->unsignedBigInteger('selected_answer')->nullable();;
+
+
         });
     }
 
@@ -26,6 +31,6 @@ class CreateActiveQuizzesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('active_quizzes');
+        Schema::dropIfExists('submitted_questions');
     }
 }

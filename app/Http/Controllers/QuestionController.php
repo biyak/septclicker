@@ -32,7 +32,25 @@ class QuestionController extends Controller
         //Takes the quiz we are working on tht was passed into the create function
         //Create a new question object with question()
         //And add the data to the new question for the quiz we're working on
-        $quiz->question()->create($data);
+        if (request('image') != null) {
+            $imagePath = request('image')->store('uploads', 'public'); 
+        }
+        else {$imagePath = null;}
+        
+
+        $quiz->question()->create([
+            'question_text' => $data['question_text'],
+            'question_ans' => $data['question_ans'],
+            'image' => $imagePath,
+            'quiz_id' =>  $data['quiz_id'],
+            'option_a' => $data['option_a'],
+            'option_b' =>  $data['option_b'],
+            'option_c' =>  $data['option_c'],
+            'option_d' =>  $data['option_d'],
+            'option_e' => $data['option_e'],
+        ]);
+
+
         return view('instructorside.quiz.addquestion', compact('quiz'));
     }
 
@@ -40,11 +58,13 @@ class QuestionController extends Controller
         return view('instructorside/quiz/question/edit', compact('quiz', 'question'));
     }
 
+
+
     // public function show(\App\Quiz $quiz){
     //     return view('instructorside.quiz.addquestion', compact('quiz'));
     // }
 
-    public function update(\App\Question $question){
+    public function update(\App\Quiz $quiz, \App\Question $question){
         $data = request()->validate(
             ['question_text' => '',
             'question_ans' => '',
@@ -58,13 +78,29 @@ class QuestionController extends Controller
             ]
         );
 
-        $question-> update($data);
+        if (request('image') != null) {
+            $imagePath = request('image')->store('uploads', 'public'); 
+        }
+        else {$imagePath = null;} //second option is driver to store your file. 
+                                                    //there are diff drivers, s3 for amazon, but we have local storage under public
+        $question-> update([
+            'question_text' => $data['question_text'],
+            'question_ans' => $data['question_ans'],
+            'image' => $imagePath,
+            'quiz_id' =>  $data['quiz_id'],
+            'option_a' => $data['option_a'],
+            'option_b' =>  $data['option_b'],
+            'option_c' =>  $data['option_c'],
+            'option_d' =>  $data['option_d'],
+            'option_e' => $data['option_e'],
+        ]);
 
         //auth()->user()->quiz()->update($data);
 
-        //dd(auth()->user()->quiz->where('id',$quiz->id));
+        //dd($question->id);
 
-        //return redirect('instructorquizlist/'. auth()->user()->id);
-        //return redirect('question');
+        
+        return redirect('q/'.$question->quiz_id);
+    
     }
 }

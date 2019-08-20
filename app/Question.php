@@ -11,4 +11,13 @@ class Question extends Model
     public function quiz() {
         return $this->belongsTo(Quiz::class);
     }
+
+    public function clickquiz() {
+        return $this->belongsTo(Quiz::class);
+    }
+
+
+    public function submittedquestion() {
+        return $this->hasMany(SubmittedQuestion::class);
+    }
 }

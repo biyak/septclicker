@@ -43,23 +43,32 @@ class User extends Authenticatable
         return $this->hasMany(Quiz::class);
     }
 
-    public function isInstructor()
+    public function userable()
     {
-        $instructorRecord = \App\Instructor::where('user_id', $this->id)->first();
-        if ($instructorRecord) {
-            return true;
-        } else {
-            return false;
-        }
+        return $this->morphTo();
     }
 
-    public function isStudent()
-    {
-        $studentRecord = \App\Student::where('user_id', $this->id)->first();
-        if ($studentRecord) {
-            return true;
-        } else {
-            return false;
-        }
+    public function submittedquestion() {
+        return $this->hasMany(SubmittedQuestion::class)->orderBy('created_at', 'ASC');
     }
+
+    // public function isInstructor()
+    // {
+    //     $instructorRecord = \App\Instructor::where('user_id', $this->id)->first();
+    //     if ($instructorRecord) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
+
+    // public function isStudent()
+    // {
+    //     $studentRecord = \App\Student::where('user_id', $this->id)->first();
+    //     if ($studentRecord) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 } 

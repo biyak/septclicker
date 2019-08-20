@@ -31,11 +31,15 @@ class QuizController extends Controller
     }
 
     public function show(\App\Quiz $quiz){
-        return view('instructorside.quiz.question.show', compact('quiz'));
+        return view('instructorside.quiz.show', compact('quiz'));
     }
 
     public function edit(\App\Quiz $quiz){
         return view('instructorside/quiz/edit', compact('quiz'));
+    }
+
+    public function launch(\App\Quiz $quiz){
+        return view('instructorside/quiz/launch', compact('quiz'));
     }
 
     public function update(\App\Quiz $quiz){
@@ -52,6 +56,6 @@ class QuizController extends Controller
         //dd(auth()->user()->quiz->where('id',$quiz->id));
 
         //return redirect('instructorquizlist/'. auth()->user()->id);
-        return redirect($quiz->id.'/question/create');
+        return view('instructorside.quiz.show', compact('quiz'));
     }
 }

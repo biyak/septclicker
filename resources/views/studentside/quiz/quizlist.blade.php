@@ -17,7 +17,7 @@
                     @foreach(Auth::user() -> quiz as $quiz)
                         <tr>
                             <td>
-                                <a href="/active/{{$quiz->id}}/{{Auth::user()->id}}/show" >
+                                <a href="/active/{{$quiz->id}}/show" >
                                     {{$quiz->quiz_name}} - ( {{$quiz->quiz_weight}} %)
                                 </a>
                             </td>

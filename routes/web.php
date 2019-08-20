@@ -40,6 +40,7 @@ Route::get('/instructorprlist', 'InstructorPRListController@index')->name('Instr
 Route::get('/createpr', 'CreatePRController@index')->name('CreatePR');
 
 //Creating and displaying quizzes!
+Route::get('/q/{quiz}/launch', 'QuizController@launch')->name('{quiz}.launch');
 Route::get('/q/create', 'QuizController@create');
 Route::post('/q', 'QuizController@store');
 Route::get('/q/{quiz}', 'QuizController@show');
@@ -52,19 +53,31 @@ Route::patch('/q/{quiz}/', 'QuizController@update')->name('{quiz}.update');
 //Creating and displaying questions
 Route::get('{quiz}/question/create', 'QuestionController@create');
 Route::post('{quiz}/question', 'QuestionController@store');
-Route::get('question/{question}/q', 'QuestionController@show');
+Route::get('{quiz}/question/{question}', 'QuestionController@show');
 
 //Editing question
-Route::get('question/{question}/edit', 'QuestionController@edit')->name('{question}.edit');
-Route::patch('question/{question}/q', 'QuestionController@update')->name('{question}.update');
+Route::get('{quiz}/question/{question}/edit', 'QuestionController@edit')->name('{question}.edit');
+Route::patch('{quiz}/question/{question}', 'QuestionController@update')->name('{question}.update');
 
+//Live quizzes
+Route::get('{quiz}/question/{question}/live', 'SubmittedQuestionController@live')->name('{question}.live');
+Route::post('{quiz}/question/{question}', 'SubmittedQuestionController@store')->name('{question}.store');
+Route::get('{quiz}/question/{question}/responses', 'SubmittedQuestionController@show')->name('{question}.show');
 
 Route::get('/testbank', 'TestBankController@index')->name('TestBank');
 
 Route::get('midterm1', 'Midterm1Controller@index')->name('M1');
+
+//STUDENT SIDE
 
 //Displaying quizzes for students
 Route::get('/active/{quiz}/conf', 'ActiveQuizController@create')->name('ActiveQuiz');
 Route::get('/active/{quiz}/show', 'ActiveQuizController@show')->name('ActiveQuiz');
 Route::post('/active', 'QuizController@store');
 
+//Creating and displaying CLICK quizzes!
+//Route::get('/cq/{quiz}/{clickquiz}', 'ClickQuizController@show');
+Route::post('/cq', 'QuizController@store');
+
+//Displaying quiz list for student
+Route::get('/studentquizlist/{user}', 'InstructorQuizListController@index')->name('instructorquizlist.show');

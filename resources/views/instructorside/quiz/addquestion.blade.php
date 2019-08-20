@@ -17,9 +17,18 @@
   <body>
 
     <!--Heading and Menu-->
+
+
    <div class="container whiteTxt pb-4 pt-5">
     <div class="jumbotron">
-    <div><h1>Create Question</h1></div>
+    <div class= "row"> 
+                                <div class="col-md-8">
+                                    <h1> {{$quiz->quiz_name}} </h1>
+                                        <p>Instructor: {{$quiz->user->name}} </p>
+                                        <p> Weight: {{$quiz->quiz_weight}}%</p>
+                                </div>
+                        </div>
+    <div><h2>Create Question</h2></div>
  
 
 
@@ -34,7 +43,7 @@
         
                 <div id="questionsCont"> 
                     <div class="form-group row">
-                        <label class="col-2 col-form-label text-center">Time Limit</label>
+                        <label class="col-2 col-form-label text-center">Time Limit (Min)</label>
                         <div class="col-3">
                             <input class="form-control" type="number" placeholder="Allowed time (seconds)" name="timelimit">
                         </div>

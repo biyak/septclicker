@@ -10,7 +10,7 @@
             <div class= "row"> 
             <div class="col-md-8">
                                     <h2> {{$quiz->quiz_name}} </h2>
-                                        <p>Instructor: {{$quiz->user->name}} </p>
+                                        <p>Instructor: {{Auth::user()->name}}</p>
                                         <p> Weight: {{$quiz->quiz_weight}}%</p>
                                 </div>
             </div>

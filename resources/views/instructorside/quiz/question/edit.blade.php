@@ -2,12 +2,24 @@
 <!-- QUESTION EDIT -->
 @section('content')
 <div class="container">
+            <div class = "container">
+                    <div class = "jumbotron"> 
+                        <div class= "row"> 
+                                <div class="col-md-8">
+                                    <h2> {{$quiz->quiz_name}} </h2>
+                                        <p>Instructor: {{$quiz->user->name}} </p>
+                                        <p> Weight: {{$quiz->quiz_weight}}%</p>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
     <div class="jumbotron">
     <!-- This is the beginning of the code that was added to the heading to create the quiz form: -->
     <div class="container whiteTxt" style="padding-bottom:50px">
     <h1>Edit {{$question->question_text}} </h1></div>
     
-    <form action="q/{{$quiz->id}}" enctype="multipart/form-data" method="post" >
+    <form action="/{{$question->quiz_id}}/question/{{$question->id}}" enctype="multipart/form-data" method="post" >
         <!--Variables-->
         @csrf
         @method('PATCH')
@@ -21,7 +33,7 @@
 
     <div id="questionsCont"> 
         <div class="form-group row">
-            <label class="col-2 col-form-label text-center">Time Limit</label>
+            <label class="col-2 col-form-label text-center">Time Limit (min)</label>
             <div class="col-3">
                 <input class="form-control" type="number" value="{{ old('timelimit') ?? $question->timelimit}}" placeholder="Allowed time (seconds)" name="timelimit">
             </div>

@@ -4,12 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Quiz extends Model
+class ClickQuiz extends Model
 {
-    protected $guarded = [];
 
-    public function instructor() {
-        return $this->belongsTo(Instructor::class);
+    public function quiz() {
+        return $this->belongsTo(Quiz::class);
     }
 
     public function question() {
@@ -17,9 +16,6 @@ class Quiz extends Model
     }
 
     public function user() {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Student::class);
     }
-
-
-
 }

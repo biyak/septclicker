@@ -1,7 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-            
+<style>
+        .jumbotron{
+            background-color: #7CFC00;
+        }
+    </style>  
 <body>
 
             
@@ -9,15 +13,10 @@
                     <div class = "jumbotron"> 
                         <div class= "row"> 
                                 <div class="col-md-8">
-                                    <h2> {{$quiz->quiz_name}} </h2>
+                                    <h2> {{$quiz->quiz_name}} is Now Live</h2>
                                         <p>Instructor: {{$quiz->user->name}} </p>
                                         <p> Weight: {{$quiz->quiz_weight}}%</p>
-                                        <p> Select questions to update or add more questions: </p> 
-
-                                        <a href ='../{{$quiz->id}}/question/create' > <button type="button" class="btn btn-primary" > 
-                                            Add Questions
-                                            </button> 
-                                        </a> 
+                                        <p> Select questions to make them visible to students.</p> 
                                 </div>
                         </div>
                     </div>
@@ -32,7 +31,7 @@
 $num=1
 @endphp
 @foreach($quiz -> question as $question)
-    <div > <a href="/{{$quiz->id}}/question/{{$question->id}}/edit" >
+    <div > <a href="/{{$quiz->id}}/question/{{$question->id}}/live" >
             <h3> Question {{$num}}</h3>
             <div class="question"> <b> {{$question->question_text}}</b> </div>
 
@@ -89,9 +88,9 @@ $num++
 <!-- Button trigger modal -->
 <div class="container">
 <div class ="jumbotron">
-<a href = "{{$quiz->id}}/launch"> <button type="button" class="btn btn-primary" > 
+<a href = "#"> <button type="button" class="btn btn-primary" > 
                 
-                Launch Quiz
+                Quiz Completed
            </button> </a> 
 </div>
 </div>

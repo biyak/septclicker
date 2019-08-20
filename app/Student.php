@@ -2,11 +2,12 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Student extends User
+class Student extends Model
 {
-    use Notifiable;
 
     public function activequizzes() {
         return $this->hasMany(ActiveQuiz::class);
@@ -14,5 +15,14 @@ class Student extends User
 
     public function instructors() {
         return $this->belongsToMany(Instructor::class);
+    }
+
+    public function clickquizzes() {
+        return $this->hasMany(ClickQuiz::class);
+    }
+
+    public function user()
+    {
+        return $this->morphOne('App\User', 'userable');
     }
 }
