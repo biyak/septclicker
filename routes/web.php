@@ -19,7 +19,7 @@ Auth::routes();
 
 Route::get('/profile/{user}', 'ProfilesController@index')->name('profile.show');
 
-Route::get('/studenthome', 'HomeController@index')->name('Home');
+//Route::get('/studenthome', 'HomeController@index')->name('Home');
 
 Route::get('/quizlist/{user}', 'QuizListController@index')->name('QuizList');
 
@@ -29,7 +29,7 @@ Route::get('/prlist', 'PRListController@index')->name('PRList');
 
 Route::get('/peerreview', 'PeerReviewController@index')->name('PeerReview');
 
-Route::get('/quizinteractive', 'QuizInteractiveController@index')->name('QuizInteractive');
+//Route::get('/quizinteractive', 'QuizInteractiveController@index')->name('QuizInteractive');
 
 Route::get('/instructorhome', 'InstructorHomeController@index')->name('InstructorHome');
 
@@ -66,8 +66,6 @@ Route::get('{quiz}/question/{question}/responses', 'SubmittedQuestionController@
 
 Route::get('/testbank', 'TestBankController@index')->name('TestBank');
 
-Route::get('midterm1', 'Midterm1Controller@index')->name('M1');
-
 //STUDENT SIDE
 
 //Displaying quizzes for students
@@ -77,7 +75,7 @@ Route::post('/active', 'QuizController@store');
 
 //Creating and displaying CLICK quizzes!
 //Route::get('/cq/{quiz}/{clickquiz}', 'ClickQuizController@show');
-Route::post('/cq', 'QuizController@store');
+//Route::post('/cq', 'QuizController@store');
 
 //Displaying quiz list for student
 Route::get('/studentquizlist/{user}', 'InstructorQuizListController@index')->name('instructorquizlist.show');
