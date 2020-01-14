@@ -18,7 +18,7 @@ class CreateSubmittedQuestionsTable extends Migration
             $table->timestamps();
             $table->unsignedBigInteger('user_id'); // belongs to user 
             $table->unsignedBigInteger('question_id');
-            $table->unsignedBigInteger('selected_answer')->nullable();;
+            $table->string('selected_answer')->nullable();;
 
 
         });

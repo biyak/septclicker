@@ -19,7 +19,7 @@ class CreateSubmittedQuizzesTable extends Migration
             $table->unsignedBigInteger('quiz_id')->nullable();
             $table->unsignedBigInteger('student_id')->nullable();
             $table->unsignedBigInteger('question_id')->nullable();
-            $table->unsignedBigInteger('answer')->nullable();;
+            $table->string('answer')->nullable();;
 
         });
     }

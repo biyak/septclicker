@@ -19,7 +19,7 @@ class CreateQuestionsTable extends Migration
             $table->unsignedBigInteger('quiz_id');
 
             $table->string('question_text');
-            $table->Integer('question_ans');
+            $table->string('question_ans');
             $table->Integer('timelimit')->nullable();
 
             $table->string('image')->nullable();
