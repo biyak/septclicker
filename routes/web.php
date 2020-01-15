@@ -79,3 +79,4 @@ Route::post('/active', 'QuizController@store');
 
 //Displaying quiz list for student
 Route::get('/studentquizlist/{user}', 'InstructorQuizListController@index')->name('instructorquizlist.show');
+Route::get('/studenthome', 'StudentHomeController@index')->name('studenthome.show');
