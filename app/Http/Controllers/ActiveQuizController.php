@@ -48,7 +48,15 @@ class ActiveQuizController extends Controller
         if (!$this->attemptedQuiz($quiz) || !$this->mayEnterQuiz($quiz)){
             return abort(403, "You are not eligible to attempt this quiz");
         }
-        return view('studentside.quiz.show', compact('quiz'));
+
+        // Calculate the end time based on the quiz's time limit and the user's start time
+        $student = auth()->user();
+        $attempt = $quiz->attempts()->where('student_id',$student->id)->get()[0];
+
+        $endtime = strtotime($attempt->attempt_begin) + $quiz->timelimit * 60;
+
+
+        return view('studentside.quiz.show', compact('quiz') + ['endtime' => $endtime]);
     }
 
     // Logic for the confirmation page before launching a quiz
