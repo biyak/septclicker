@@ -33,6 +33,9 @@ class ActiveQuizController extends Controller
                 return  true;
             }
         }
+
+        // We haven't even attempted the quiz yet - return true
+        return true;
     }
 
     public function __construct()
@@ -41,6 +44,10 @@ class ActiveQuizController extends Controller
     }
 
     public function show(\App\Quiz $quiz){
+        // If we haven't started an attempt or we cannot enter this quiz, return false
+        if (!$this->attemptedQuiz($quiz) || !$this->mayEnterQuiz($quiz)){
+            return abort(403, "You are not eligible to attempt this quiz");
+        }
         return view('studentside.quiz.show', compact('quiz'));
     }
 
@@ -67,6 +74,20 @@ class ActiveQuizController extends Controller
             // The user should not be able to get here if they already have an attempt in progress...
             return abort(403,"Don't do that");
         }
+
+        // TODO: Check that the user is registered in the course this quiz belongs to
+
+        // Create a new attempt for this user
+        $attempt = new \App\QuizAttempt;
+        $student = auth()->user();
+        $attempt->quiz_id = $quiz->id;
+        $attempt->student_id = $student->id;
+        $attempt->attempt_begin = date_create();
+        $attempt->finalized = false;
+        $attempt->save();
+
+        // Redirect the user to their quiz
+        return redirect("/active/" . $quiz->id . "/show");
 
     }
 

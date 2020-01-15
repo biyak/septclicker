@@ -8,7 +8,7 @@
  * @return false|float|int The number of seconds that have passed since this timestamp, or false if the timestamp is invalid
  */
 function getTimestampDifference($timestamp){
-    // Laravel stores the timestamps as strings that will be set in EST (I presume we won't be moving the servers overseas?)
-    // Current time in GMT - 5 hours - Time of timestamp in GMT = seconds passed
-    return time() - 5 * 60 * 60 - strtotime($timestamp);
+    // Laravel stores the timestamps as strings
+    // Current time in GMT - Time of timestamp in GMT = seconds passed
+    return time() - strtotime($timestamp);
 }
