@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class SubmittedQuestion extends Model
 {
+
+    protected function getDateFormat()
+    {
+        return 'U';
+    }
+
     protected $fillable = [
         'question_id', 'user_id', 'selected_answer'
     ];

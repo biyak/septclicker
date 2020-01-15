@@ -4,16 +4,16 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SubmittedQuiz extends Model
-{
+class QuizAttempt extends Model {
     protected $guarded = [];
 
-    protected function getDateFormat()
-    {
-        return 'U';
+    public function quiz() {
+        return $this->belongsTo(Quiz::class);
     }
 
     public function user() {
         return $this->belongsTo(User::class);
     }
 }
+
+?>

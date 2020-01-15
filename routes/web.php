@@ -71,6 +71,8 @@ Route::get('/testbank', 'TestBankController@index')->name('TestBank');
 //Displaying quizzes for students
 Route::get('/active/{quiz}/conf', 'ActiveQuizController@create')->name('ActiveQuiz');
 Route::get('/active/{quiz}/show', 'ActiveQuizController@show')->name('ActiveQuiz');
+Route::get('/active/{quiz}/launch', 'ActiveQuizController@showConfirmation')->name('ActiveQuiz');
+Route::get('/active/{quiz}/confirmlaunch', 'ActiveQuizController@launchQuiz')->name('ActiveQuiz');
 Route::post('/active', 'QuizController@store');
 
 //Creating and displaying CLICK quizzes!
@@ -78,5 +80,5 @@ Route::post('/active', 'QuizController@store');
 //Route::post('/cq', 'QuizController@store');
 
 //Displaying quiz list for student
-Route::get('/studentquizlist/{user}', 'InstructorQuizListController@index')->name('instructorquizlist.show');
+Route::get('/studentquizlist/{user}', 'StudentQuizListController@index')->name('studentquizlist.show');
 Route::get('/studenthome', 'StudentHomeController@index')->name('studenthome.show');
