@@ -8,7 +8,7 @@ class CreateQuestionAttemptsTable extends Migration
 {
     /**
      * Run the migrations
-     * 
+     *
      * @return void
      */
     public function up(){
@@ -17,6 +17,7 @@ class CreateQuestionAttemptsTable extends Migration
             $table->bigInteger('question_id')->unsigned();
             $table->bigInteger('student_id')->unsigned();
             $table->timestamp("attempt_begin");
+            $table->mediumInteger("client_timestamp")->unsigned();
             $table->boolean("finalized");
             $table->foreign('question_id')->references('id')->on('questions');
             $table->foreign('student_id')->references('id')->on('users');
