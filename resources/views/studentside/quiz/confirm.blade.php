@@ -15,7 +15,7 @@
                         <p>Quiz name: {{$quiz->quiz_name}}</p>
                         <p>Course: TODO, WE DON'T HAVE ANY CONCEPT OF COURSES YET</p>
                         <p>Instructor: {{$instructorName}}</p>
-                        <p>Time limit: {{$quiz->timelimit === null ? "None, you may submit this quiz as long as it remains open" : $quiz->timelimit + " minutes"}}</p>
+                        <p>Time limit: {{$quiz->timelimit === null ? "None, you may submit this quiz as long as it remains open" : $quiz->timelimit . " minutes"}}</p>
                         <p>Upon clicking "Start quiz", you will have until the mentioned time limit to complete and submit the quiz. If you experience technical issues, you may re-enter this quiz as long as you still have time remaining.</p>
 
                         <p>If you click "Go back" your attempt will not be consumed and you may choose to start the quiz at a later time.</p>
