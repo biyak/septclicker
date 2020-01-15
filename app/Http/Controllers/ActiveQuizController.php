@@ -94,6 +94,15 @@ class ActiveQuizController extends Controller
         $attempt->finalized = false;
         $attempt->save();
 
+        // TODO: If this quiz is not singular mode, pre-build all question attempts
+        if (!$quiz->singular_questions){
+            $questions = $quiz->question()->get();
+            foreach($questions as $question){
+                // PATRICK THIS IS WHERE YOU LEFT OFF ON WEDNESDAY
+                // BUILD THE QUESTION ATTEMPTS - DO NOT FORGET!!!
+            }
+        }
+
         // Redirect the user to their quiz
         return redirect("/active/" . $quiz->id . "/show");
 
