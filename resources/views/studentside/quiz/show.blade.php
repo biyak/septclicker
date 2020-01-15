@@ -122,34 +122,36 @@ $num++
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
+    @if ($endtime !== null)
+        <script>
 
-    <script>
-
-        const padNumber = function(num){
-            const stringified = num + "";
-            return stringified.length === 2 ? stringified : "0" + stringified;
-        }
-
-        const formatTime = function(time) {
-            const seconds = time % 60;
-            const minutes = Math.floor(time / 60) % 60
-            const hours = Math.floor(Math.floor(time / 60) / 60);
-
-            return padNumber(hours) + ":" + padNumber(minutes) + ":" + padNumber(seconds)
-        }
-
-        const updateTime = function() {
-            let timeDifference = {{$endtime}} - Math.floor(Date.now()/1000);
-            if (timeDifference > 0) {
-                $("#timer").text("Time remaining: " + formatTime(timeDifference));
-                setTimeout(updateTime, 1000);
-            } else {
-                alert("Hi this really should auto submit");
+            const padNumber = function(num){
+                const stringified = num + "";
+                return stringified.length === 2 ? stringified : "0" + stringified;
             }
-        };
 
-        updateTime();
-    </script>
+            const formatTime = function(time) {
+                const seconds = time % 60;
+                const minutes = Math.floor(time / 60) % 60
+                const hours = Math.floor(Math.floor(time / 60) / 60);
+
+                return padNumber(hours) + ":" + padNumber(minutes) + ":" + padNumber(seconds)
+            }
+
+            const updateTime = function() {
+                let timeDifference = {{$endtime}} - Math.floor(Date.now()/1000);
+                if (timeDifference > 0) {
+                    $("#timer").text("Time remaining: " + formatTime(timeDifference));
+                    setTimeout(updateTime, 1000);
+                } else {
+                    // TODO: Once we have a submission endpoint working, use it
+                    alert("Hi this really should auto submit");
+                }
+            };
+
+            updateTime();
+        </script>
+    @endif
 
 </body>
 
