@@ -82,3 +82,7 @@ Route::post('/active', 'QuizController@store');
 //Displaying quiz list for student
 Route::get('/studentquizlist/{user}', 'StudentQuizListController@index')->name('studentquizlist.show');
 Route::get('/studenthome', 'StudentHomeController@index')->name('studenthome.show');
+
+// Backend routes - these aren't meant for humans to use and will return JSON
+Route::get("/ajax/submitanswer/{question}/{answer}/{clientTime}","QuestionAttemptController@submitAnswer");
+
