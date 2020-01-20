@@ -10,7 +10,7 @@ class QuizController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-    } 
+    }
 
     public function create(){
         return view('instructorside/quiz/create');
@@ -20,10 +20,11 @@ class QuizController extends Controller
 
         $data = request()->validate([
             'quiz_name' => 'required',
-            'quiz_weight' => 'required'
+            'quiz_weight' => 'required',
+            'singular_questions' => 'required'
         ]);
         //need to get authenticated user
-        $quiz = auth()->user()->quiz()->create($data); 
+        $quiz = auth()->user()->quiz()->create($data);
 
         //dd($quiz);
 

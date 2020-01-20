@@ -14,23 +14,25 @@
                 <div class="form-group row pt-3 pb-3">
                     <label class="col-2 col-form-label">Quiz Name</label>
                     <div class="col-10">
-                        <input class="form-control" type="text" 
+                        <input class="form-control" type="text"
                         placeholder="Quiz Name eg.(Fluid Dynamics Quiz 1)" name="quiz_name">
                     </div>
                 </div>
-        
+
                 <div class="form-group row pt-3 pb-3">
                     <label class="col-2 col-form-label">Quiz Weight</label>
                     <div class="col-10">
-                        <input class="form-control" type="number" 
+                        <input class="form-control" type="number"
                         placeholder="Weight (%)" name="quiz_weight">
+                        <!-- Jenny make this an actual control pls - this controls single/multiple questions mode -->
+                        <input type="hidden" name="singular_questions" value="1"/>
                     </div>
                 </div>
 
                 <!-- <div class="form-group row pt-3 pb-3">
                     <label class="col-2 col-form-label">Course Code</label>
                     <div class="col-10">
-                        <input class="form-control" type="text" 
+                        <input class="form-control" type="text"
                         placeholder="Course Code eg.(CompSci 1XA3)" name="course_code">
                     </div>
                 </div>
@@ -38,7 +40,7 @@
                 <div class="form-group row pt-3">
                     <label class="col-2 col-form-label">Quiz Type</label>
                     <div class="col-10">
-                        <input class="form-control" max-length="1" type="text" 
+                        <input class="form-control" max-length="1" type="text"
                         placeholder="M for Midterm or I for Interactive" name="quiz_type" pattern="[MImi]" title="Enter M or m for a Midterm Quiz. Enter I or i for an Interactive Quiz">
                     </div>
                     Midterm quizzes allow students to answer all questions at the same time with a time-limit for the whole quiz. Interactive quizzes will only allow students to answer the selected question in specified question-time-limit
@@ -51,7 +53,7 @@
                     </div>
                 </div>
             </div> -->
-           <button type="submit" class="btn btn-primary" align="right"> 
+           <button type="submit" class="btn btn-primary" align="right">
                 Next
            </button>
 
