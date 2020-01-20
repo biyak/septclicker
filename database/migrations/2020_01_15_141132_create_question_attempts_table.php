@@ -17,7 +17,7 @@ class CreateQuestionAttemptsTable extends Migration
             $table->bigInteger('question_id')->unsigned();
             $table->bigInteger('student_id')->unsigned();
             $table->timestamp("attempt_begin");
-            $table->mediumInteger("client_timestamp")->unsigned();
+            $table->bigInteger("client_timestamp")->unsigned();
             $table->string("selected_answer");
             $table->boolean("finalized");
             $table->foreign('question_id')->references('id')->on('questions');
