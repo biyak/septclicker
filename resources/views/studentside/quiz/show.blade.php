@@ -35,26 +35,25 @@ $num=1
         <input type="hidden" value="{{$question->id}}" name="question_id">
     <h3> Question {{$num}}</h3>
             <div > <b> {{$question->question_text}}</b> </div>
-        
 
 
                 @if ($question->option_a !== null)
                     <p>
-                 <input type="radio" id="{{$num}}-option_a" name="answer{{$num}}" value="option_a"/>
+                 <input type="radio" id="{{$num}}-option_a" qid="{{$question->id}}" name="answer{{$num}}" value="option_a" {{$answers[$question->id] === 'a' ? "checked" : ""}}/>
                     <label for="{{$num}}-option_a">{{$question->option_a}}</label>
                     </p>
                 @endif
 
                 @if ($question->option_b !== null)
                     <p>
-                 <input type="radio"  id="{{$num}}-option_b" name="answer{{$num}}"  value="option_b"/>
+                 <input type="radio"  id="{{$num}}-option_b" qid="{{$question->id}}"  name="answer{{$num}}"  value="option_b" {{$answers[$question->id] === 'b' ? "checked" : ""}}/>
                 <label for="{{$num}}-option_b">{{$question->option_b}}</label>
                     </p>
                 @endif
 
                 @if ($question->option_c !== null)
                     <p>
-                 <input type="radio" id="{{$num}}-option_c" name="answer{{$num}}"  value="option_c"/>
+                 <input type="radio" id="{{$num}}-option_c" qid="{{$question->id}}"  name="answer{{$num}}"  value="option_c" {{$answers[$question->id] === 'c' ? "checked" : ""}}/>
                 <label for="{{$num}}-option_c">{{$question->option_c}}</label>
                     </p>
 
@@ -62,7 +61,7 @@ $num=1
 
                 @if ($question->option_d !== null)
                     <p>
-                 <input type="radio" id="{{$num}}-option_d" name="answer{{$num}}" value="option_d"/>
+                 <input type="radio" id="{{$num}}-option_d" qid="{{$question->id}}"  name="answer{{$num}}" value="option_d" {{$answers[$question->id] === 'd' ? "checked" : ""}}>
                 <label for="{{$num}}-option_d">{{$question->option_d}}</label>
                     </p>
 
@@ -70,7 +69,7 @@ $num=1
 
                 @if ($question->option_e !== null)
                     <p>
-                 <input type="radio" id="{{$num}}-option_e" name="answer{{$num}}" value="option_e"/>
+                 <input type="radio" id="{{$num}}-option_e" qid="{{$question->id}}"  name="answer{{$num}}" value="option_e" {{$answers[$question->id] === 'e' ? "checked" : ""}}/>
                 <label for="{{$num}}-option_e">{{$question->option_e}}</label>
                     </p>
 
@@ -161,7 +160,15 @@ $num++
     @endif
 
     <script>
-        $("input[type='radio']").click(e => console.log(e.target.name + ": " + e.target.value))
+        $(document).ready(() => {
+            $("input[type='radio']").click(e => {
+                const qid = e.target.getAttribute("qid");
+                const answer = e.target.value.substring(7);
+                console.log(qid + ": " + answer)
+                $.get("/ajax/submitanswer/" + qid + "/" + answer + "/" + Math.floor(Date.now() / 1000))
+            })
+        })
+
     </script>
 
 </body>

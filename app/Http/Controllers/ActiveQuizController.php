@@ -53,10 +53,20 @@ class ActiveQuizController extends Controller
         $student = auth()->user();
         $attempt = $quiz->attempts()->where('student_id',$student->id)->get()[0];
 
+        // Build the list of saved answers to repopulate the quiz on client re-entry
+        $answers = [];
+        foreach($quiz->question()->get() as $question){
+            $questionAttempt = $question->attempts()->where('student_id',$student->id)->get();
+            if (sizeof($questionAttempt) > 0){
+                $qAttempt = $questionAttempt[0];
+                $answers[$question->id] = $qAttempt->selected_answer;
+            }
+        }
+
         $endtime = $quiz->timelimit ?  strtotime($attempt->attempt_begin) + $quiz->timelimit * 60 : null;
 
 
-        return view('studentside.quiz.show', compact('quiz') + ['endtime' => $endtime]);
+        return view('studentside.quiz.show', compact('quiz') + ['endtime' => $endtime] + compact('answers'));
     }
 
     // Logic for the confirmation page before launching a quiz
@@ -94,7 +104,6 @@ class ActiveQuizController extends Controller
         $attempt->finalized = false;
         $attempt->save();
 
-        // TODO: If this quiz is not singular mode, pre-build all question attempts
         if (!$quiz->singular_questions){
             $questions = $quiz->question()->get();
             foreach($questions as $question){
