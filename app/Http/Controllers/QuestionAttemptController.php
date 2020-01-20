@@ -91,6 +91,6 @@ class QuestionAttemptController extends Controller {
         $question_attempt->client_timestamp = $clientTime;
         $question_attempt->save();
 
-        return abort(403, $answer);
+        return ['success' => true];
     }
 }

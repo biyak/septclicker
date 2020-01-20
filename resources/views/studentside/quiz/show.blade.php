@@ -153,6 +153,10 @@ $num++
         </script>
     @endif
 
+    <script>
+        $("input[type='radio']").click(e => console.log(e.target.name + ": " + e.target.value))
+    </script>
+
 </body>
 
 @endsection

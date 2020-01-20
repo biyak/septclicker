@@ -53,7 +53,7 @@ class ActiveQuizController extends Controller
         $student = auth()->user();
         $attempt = $quiz->attempts()->where('student_id',$student->id)->get()[0];
 
-        $endtime = strtotime($attempt->attempt_begin) + $quiz->timelimit * 60;
+        $endtime = $quiz->timelimit ?  strtotime($attempt->attempt_begin) + $quiz->timelimit * 60 : null;
 
 
         return view('studentside.quiz.show', compact('quiz') + ['endtime' => $endtime]);
@@ -98,8 +98,14 @@ class ActiveQuizController extends Controller
         if (!$quiz->singular_questions){
             $questions = $quiz->question()->get();
             foreach($questions as $question){
-                // PATRICK THIS IS WHERE YOU LEFT OFF ON WEDNESDAY
-                // BUILD THE QUESTION ATTEMPTS - DO NOT FORGET!!!
+                $qAttempt = new \App\QuestionAttempt;
+                $qAttempt->question_id = $question->id;
+                $qAttempt->student_id = $student->id;
+                $qAttempt->attempt_begin = date_create();
+                $qAttempt->finalized = false;
+                $qAttempt->client_timestamp = 0;
+                $qAttempt->selected_answer = '';
+                $qAttempt->save();
             }
         }
 
