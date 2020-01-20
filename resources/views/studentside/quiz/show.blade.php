@@ -35,38 +35,45 @@ $num=1
         <input type="hidden" value="{{$question->id}}" name="question_id">
     <h3> Question {{$num}}</h3>
             <div > <b> {{$question->question_text}}</b> </div>
-
-            <label>
+        
 
 
                 @if ($question->option_a !== null)
-                 <p> <input type="radio" name="answer{{$num}}" value="option_a">
-                {{$question->option_a}}
-                 </p>
+                    <p>
+                 <input type="radio" id="{{$num}}-option_a" name="answer{{$num}}" value="option_a"/>
+                    <label for="{{$num}}-option_a">{{$question->option_a}}</label>
+                    </p>
                 @endif
 
                 @if ($question->option_b !== null)
-                 <p> <input type="radio" name="answer{{$num}}"  value="option_b">
-                {{$question->option_b}}
-                 </p>
+                    <p>
+                 <input type="radio"  id="{{$num}}-option_b" name="answer{{$num}}"  value="option_b"/>
+                <label for="{{$num}}-option_b">{{$question->option_b}}</label>
+                    </p>
                 @endif
 
                 @if ($question->option_c !== null)
-                 <p> <input type="radio" name="answer{{$num}}"  value="option_c">
-                {{$question->option_c}}
-                 </p>
+                    <p>
+                 <input type="radio" id="{{$num}}-option_c" name="answer{{$num}}"  value="option_c"/>
+                <label for="{{$num}}-option_c">{{$question->option_c}}</label>
+                    </p>
+
                 @endif
 
                 @if ($question->option_d !== null)
-                 <p> <input type="radio" name="answer{{$num}}" value="option_d">
-                {{$question->option_ad}}
-                 </p>
+                    <p>
+                 <input type="radio" id="{{$num}}-option_d" name="answer{{$num}}" value="option_d"/>
+                <label for="{{$num}}-option_d">{{$question->option_d}}</label>
+                    </p>
+
                 @endif
 
                 @if ($question->option_e !== null)
-                 <p> <input type="radio" name="answer{{$num}}" value="option_e">
-                {{$question->option_e}}
-                 </p>
+                    <p>
+                 <input type="radio" id="{{$num}}-option_e" name="answer{{$num}}" value="option_e"/>
+                <label for="{{$num}}-option_e">{{$question->option_e}}</label>
+                    </p>
+
                 @endif
 
 
