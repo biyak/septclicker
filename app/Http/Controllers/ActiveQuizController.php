@@ -63,10 +63,19 @@ class ActiveQuizController extends Controller
             }
         }
 
+        // If this is a singular question quiz, also build a list of attempted questions
+        $attempts = [];
+        // We only care about this if we're in singular mode
+        if ($quiz->singular_questions){
+            foreach($quiz->question()->get() as $question){
+                $attempts[$question->id] = sizeof($question->attempts()->where('student_id', $student->id)->get());
+            }
+        }
+
         $endtime = $quiz->timelimit ?  strtotime($attempt->attempt_begin) + $quiz->timelimit * 60 : null;
 
 
-        return view('studentside.quiz.show', compact('quiz') + ['endtime' => $endtime] + compact('answers'));
+        return view('studentside.quiz.show', compact('quiz') + ['endtime' => $endtime] + compact('answers') + compact('attempts'));
     }
 
     // Logic for the confirmation page before launching a quiz

@@ -25,6 +25,7 @@
 @php
 $num=1
 @endphp
+        @if(!$quiz->singular_questions)
 @foreach($quiz -> question as $question)
     <div >
     <form action="/active" method="post" enctype="multipart/form-data">
@@ -84,6 +85,20 @@ $num=1
 $num++
 @endphp
 @endforeach
+            @else
+                @php($num = 1)
+                <p>This quiz only allows you to answer one question at a time. Some of these questions may be timed, the time will start ticking when you open the question. After you submit a question, you can review it here, but you cannot change your answer</p>
+                @foreach($quiz -> question as $question)
+                    @if($attempts[$question->id] === 0)
+                        <h3>Question {{$num}}</h3>
+                        <p>You have not attempted this question yet. Click here to begin your attempt.</p>
+                        @if ($question->timelimit > 0)
+                            <p><b>Note: This question has a time limit of {{$question->timelimit}} seconds</b></p>
+                        @endif
+                    @endif
+                    @php($num++)
+                @endforeach
+            @endif
 
     <button type="submit" class="btn btn-primary" >
 
