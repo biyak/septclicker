@@ -52,6 +52,10 @@ class User extends Authenticatable
         return $this->hasMany(SubmittedQuestion::class)->orderBy('created_at', 'ASC');
     }
 
+    public function course() {
+        return $this->hasMany(Course::class);
+    }
+
     // public function isInstructor()
     // {
     //     $instructorRecord = \App\Instructor::where('user_id', $this->id)->first();
