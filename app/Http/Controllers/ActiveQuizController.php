@@ -46,7 +46,7 @@ class ActiveQuizController extends Controller
     public function show(\App\Quiz $quiz){
         // If we haven't started an attempt or we cannot enter this quiz, return false
         if (!$this->attemptedQuiz($quiz) || !$this->mayEnterQuiz($quiz)){
-            return abort(403, "You are not eligible to attempt this quiz");
+            return abort(403, "You are not eligible to view this quiz");
         }
 
         // Calculate the end time based on the quiz's time limit and the user's start time
