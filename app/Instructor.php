@@ -18,4 +18,8 @@ class Instructor extends User
     {
         return $this->morphOne('App\User', 'userable');
     }
+
+    public function course() {
+        return $this->hasMany(Course::class);
+    }
 }
