@@ -43,6 +43,67 @@ class ActiveQuizController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * Submits the quiz by copying from the attempted questions to the database
+     * Note that all checks for eligibility are done when storing to submitted questions
+     * Therefore, for security, assume the user can and will call this endpoint maliciously
+     * @param \App\Quiz $quiz
+     */
+    public function submit(\App\Quiz $quiz){
+        // If we haven't even attempted this quiz, we can't submit
+        if (!$this->attemptedQuiz($quiz)){
+            return abort(403, "You have not yet begun this quiz");
+        }
+
+        // Get the existing quiz attempt for this quiz
+        $student = auth()->user();
+        $attempt = $quiz->attempts()->where('student_id',$student->id)->get()[0];
+
+        // If this attempt is final, don't let the user re-submit (even though they can't change questions anyway)
+        if ($attempt->finalized === 1){
+            return abort(403, "You have already submitted this quiz");
+        }
+
+        // Start the submission process - first we finalize the questions so that the user cannot change them after the fact
+        foreach($quiz->question()->get() as $question){
+            foreach($question->attempt()->get() as $qAttempt){
+                $qAttempt->finalized = 1;
+                $qAttempt->save();
+            }
+        }
+
+        // Now we finalize the quiz submission
+        $attempt->finalized = true;
+        $attempt->save();
+
+        // Begin copying question answers over to the submitted_questions field
+        foreach($quiz->question()->get() as $question){
+            foreach($question->attempt()->get() as $qAttempt){
+                // Create the submitted questions
+                $submittedQuestion = new \App\SubmittedQuestion;
+                $submittedQuestion->user_id = $qAttempt->student_id;
+                $submittedQuestion->question_id = $qAttempt->question_id;
+                $submittedQuestion->selected_answer = $qAttempt->selected_answer;
+                $submittedQuestion->save();
+
+                // Create the submitted quiz
+                $submittedQuiz = new \App\SubmittedQuiz;
+                $submittedQuiz->quiz_id = $attempt->quiz_id;
+                $submittedQuiz->student_id = $qAttempt->student_id;
+                $submittedQuiz->question_id = $qAttempt->question_id;
+                $submittedQuiz->answer = $qAttempt->selected_answer;
+                $submittedQuiz->save();
+
+            }
+        }
+
+        // TODO: Take the user to a result page showing their score?
+        return redirect("/active/" + $quiz->id);
+
+
+
+    }
+
     public function show(\App\Quiz $quiz){
         // If we haven't started an attempt or we cannot enter this quiz, return false
         if (!$this->attemptedQuiz($quiz) || !$this->mayEnterQuiz($quiz)){
