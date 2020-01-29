@@ -71,6 +71,7 @@ Route::get('/testbank', 'TestBankController@index')->name('TestBank');
 //Displaying quizzes for students
 Route::get('/active/{quiz}/conf', 'ActiveQuizController@create')->name('ActiveQuiz');
 Route::get('/active/{quiz}/show', 'ActiveQuizController@show')->name('ActiveQuiz');
+Route::get('/active/{quiz}/submit', 'ActiveQuizController@submit')->name('ActiveQuiz');
 Route::get('/active/{quiz}/launch', 'ActiveQuizController@showConfirmation')->name('ActiveQuiz');
 Route::get('/active/{quiz}/confirmlaunch', 'ActiveQuizController@launchQuiz')->name('ActiveQuiz');
 Route::post('/active', 'QuizController@store');

@@ -66,7 +66,7 @@ class ActiveQuizController extends Controller
 
         // Start the submission process - first we finalize the questions so that the user cannot change them after the fact
         foreach($quiz->question()->get() as $question){
-            foreach($question->attempt()->get() as $qAttempt){
+            foreach($question->attempts()->get() as $qAttempt){
                 $qAttempt->finalized = 1;
                 $qAttempt->save();
             }
@@ -78,7 +78,7 @@ class ActiveQuizController extends Controller
 
         // Begin copying question answers over to the submitted_questions field
         foreach($quiz->question()->get() as $question){
-            foreach($question->attempt()->get() as $qAttempt){
+            foreach($question->attempts()->get() as $qAttempt){
                 // Create the submitted questions
                 $submittedQuestion = new \App\SubmittedQuestion;
                 $submittedQuestion->user_id = $qAttempt->student_id;
@@ -98,7 +98,7 @@ class ActiveQuizController extends Controller
         }
 
         // TODO: Take the user to a result page showing their score?
-        return redirect("/active/" + $quiz->id);
+        return redirect("/studentquizlist/1");
 
 
 

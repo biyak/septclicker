@@ -26,14 +26,12 @@
 $num=1
 @endphp
         @if(!$quiz->singular_questions)
-@foreach($quiz -> question as $question)
-    <div >
-    <form action="/active" method="post" enctype="multipart/form-data">
-        @csrf
+<form action="/active" method="post" enctype="multipart/form-data">
+    @csrf
 
-        <input type="hidden" value="{{$quiz->id}}" name="quiz_id">
-        <input type="hidden" value="{{Auth::user()->id}}" name="student_id">
-        <input type="hidden" value="{{$question->id}}" name="question_id">
+    <input type="hidden" value="{{$quiz->id}}" name="quiz_id">
+    <input type="hidden" value="{{Auth::user()->id}}" name="student_id">
+@foreach($quiz -> question as $question)
     <h3> Question {{$num}}</h3>
             <div > <b> {{$question->question_text}}</b> </div>
 
@@ -76,15 +74,18 @@ $num=1
 
                 @endif
 
+                <p id="{{$num}}-error" class="alert alert-danger" style="display:none"></p>
+                <p id="{{$num}}-success" class="alert alert-success" style="display:none">Answer saved successfully!</p>
+
 
                     <br>
                     <br>
-        </div>
-        <form>
 @php
 $num++
 @endphp
 @endforeach
+</form>
+</div>
             @else
                 @php($num = 1)
                 <p>This quiz only allows you to answer one question at a time. Some of these questions may be timed, the time will start ticking when you open the question. After you submit a question, you can review it here, but you cannot change your answer</p>
@@ -100,10 +101,9 @@ $num++
                 @endforeach
             @endif
 
-    <button type="submit" class="btn btn-primary" >
-
+            <button class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" >
                 Submit
-           </button> </a>
+            </button>
     </div>
 
 
@@ -125,12 +125,12 @@ $num++
               </button>
             </div>
             <div class="modal-body">
-              ~ Review of their input ~
+              <p>Are you sure you wish to submit this quiz? You will not be able to change your answers after submitting.</p>
+                <p id="data-warning">If you can read this, something has gone wrong. Sorry. :(</p>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Review Answers</button>
-              <a href = "../StudentSubmit/studentsubmit.html"> <button type="button" class="btn btn-primary" >
-
+              <a href = "/active/{{$quiz->id}}/submit"> <button type="button" class="btn btn-primary" >
                     Submit Quiz
                </button> </a>
             </div>
@@ -175,12 +175,49 @@ $num++
     @endif
 
     <script>
+
+        const checkAnswers = function(){
+            // Check if all answers are checked
+            let radios = []
+            for (let rad of $('input[type="radio"]')){
+                const radNum = Number(rad.getAttribute('qid')) - 1;
+                radios[radNum] = radios[radNum] === undefined ? rad.checked : radios[radNum] || rad.checked
+            }
+            // Objectify the radio values
+            for (let ind in radios){
+                radios[ind] = {qid: Number(ind) + 1, answered: radios[ind]}
+            }
+            // Remove answered questions and convert the rest to quiz question IDs
+            radios = radios.filter(x => x.answered === false).map(x => x.qid)
+
+            if (radios.length === 0) {
+                $("#data-warning").text("You have answered all questions, click below to submit your answers")
+            } else {
+                $("#data-warning").text("You have unanswered questions! You can still submit, but they will be marked as incorrect. The questions that still need answers are: " + radios.toString())
+            }
+        }
+
         $(document).ready(() => {
+            checkAnswers();
+
             $("input[type='radio']").click(e => {
                 const qid = e.target.getAttribute("qid");
                 const answer = e.target.value.substring(7);
                 console.log(qid + ": " + answer)
-                $.get("/ajax/submitanswer/" + qid + "/" + answer + "/" + Math.floor(Date.now() / 1000))
+                // x => x strips fetch object data - keep it in, it's not useless
+                $.get("/ajax/submitanswer/" + qid + "/" + answer + "/" + Math.floor(Date.now() / 1000)).then(x => x).then(obj => {
+                    if (obj.success === true){
+                        e.target.checked = true;
+                        $("#" + qid + "-error").hide()
+                        $("#" + qid + "-success").show()
+                    } else {
+                        $("#" + qid + "-error").text(obj.message);
+                        $("#" + qid + "-error").show()
+                        $("#" + qid + "-success").hide()
+                    }
+                })
+                checkAnswers();
+                return false;
             })
         })
 
