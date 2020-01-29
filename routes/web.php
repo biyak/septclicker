@@ -31,40 +31,40 @@ Route::get('/peerreview', 'PeerReviewController@index')->name('PeerReview');
 
 //Route::get('/quizinteractive', 'QuizInteractiveController@index')->name('QuizInteractive');
 
-Route::get('/instructorhome', 'InstructorHomeController@index')->name('InstructorHome');
+Route::get('/instructorhome', 'InstructorHomeController@index')->name('InstructorHome')->middleware("BlockStudents");
 
-Route::get('/instructorquizlist/{user}', 'InstructorQuizListController@index')->name('instructorquizlist.show');
+Route::get('/instructorquizlist/{user}', 'InstructorQuizListController@index')->name('instructorquizlist.show')->middleware("BlockStudents");
 
-Route::get('/instructorprlist', 'InstructorPRListController@index')->name('InstructorPRList');
+Route::get('/instructorprlist', 'InstructorPRListController@index')->name('InstructorPRList')->middleware("BlockStudents");
 
 Route::get('/createpr', 'CreatePRController@index')->name('CreatePR');
 
 //Creating and displaying quizzes!
-Route::get('/q/{quiz}/launch', 'QuizController@launch')->name('{quiz}.launch');
-Route::get('/q/create', 'QuizController@create');
-Route::post('/q', 'QuizController@store');
-Route::get('/q/{quiz}', 'QuizController@show');
+Route::get('/q/{quiz}/launch', 'QuizController@launch')->name('{quiz}.launch')->middleware("BlockStudents");
+Route::get('/q/create', 'QuizController@create')->middleware("BlockStudents");
+Route::post('/q', 'QuizController@store')->middleware("BlockStudents");
+Route::get('/q/{quiz}', 'QuizController@show')->middleware("BlockStudents");
 
 //Editing quiz
-Route::get('/q/{quiz}/edit', 'QuizController@edit')->name('{quiz}.edit');
-Route::patch('/q/{quiz}/', 'QuizController@update')->name('{quiz}.update');
+Route::get('/q/{quiz}/edit', 'QuizController@edit')->name('{quiz}.edit')->middleware("BlockStudents");
+Route::patch('/q/{quiz}/', 'QuizController@update')->name('{quiz}.update')->middleware("BlockStudents");
 
 
 //Creating and displaying questions
-Route::get('{quiz}/question/create', 'QuestionController@create');
-Route::post('{quiz}/question', 'QuestionController@store');
-Route::get('{quiz}/question/{question}', 'QuestionController@show');
+Route::get('{quiz}/question/create', 'QuestionController@create')->middleware("BlockStudents");
+Route::post('{quiz}/question', 'QuestionController@store')->middleware("BlockStudents");
+Route::get('{quiz}/question/{question}', 'QuestionController@show')->middleware("BlockStudents");
 
 //Editing question
-Route::get('{quiz}/question/{question}/edit', 'QuestionController@edit')->name('{question}.edit');
-Route::patch('{quiz}/question/{question}', 'QuestionController@update')->name('{question}.update');
+Route::get('{quiz}/question/{question}/edit', 'QuestionController@edit')->name('{question}.edit')->middleware("BlockStudents");
+Route::patch('{quiz}/question/{question}', 'QuestionController@update')->name('{question}.update')->middleware("BlockStudents");
 
 //Live quizzes
 Route::get('{quiz}/question/{question}/live', 'SubmittedQuestionController@live')->name('{question}.live');
 Route::post('{quiz}/question/{question}', 'SubmittedQuestionController@store')->name('{question}.store');
-Route::get('{quiz}/question/{question}/responses', 'SubmittedQuestionController@show')->name('{question}.show');
+Route::get('{quiz}/question/{question}/responses', 'SubmittedQuestionController@show')->name('{question}.show')->middleware("BlockStudents");
 
-Route::get('/testbank', 'TestBankController@index')->name('TestBank');
+Route::get('/testbank', 'TestBankController@index')->name('TestBank')->middleware("BlockStudents");
 
 //STUDENT SIDE
 
