@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\SubmittedQuestion;
+use Charts;
+use DB;
 
 class QuizController extends Controller
 {
@@ -57,6 +60,24 @@ class QuizController extends Controller
         //dd(auth()->user()->quiz->where('id',$quiz->id));
 
         //return redirect('instructorquizlist/'. auth()->user()->id);
-        return view('instructorside.quiz.show', compact('quiz'));
+        return redirect('q/'.$quiz->id);
+    }
+
+    public function index(\App\Quiz $quiz) {
+      $charts = [];
+      foreach($quiz->question()->get() as $question){
+          $sq = DB::table("submitted_questions")->select('selected_answer', DB::raw("COUNT(selected_answer) AS total"))->where("question_id", $question->id)->groupBy("selected_answer")->get();
+          $chart = Charts::create('bar', 'highcharts')
+                      ->title('Statistics')
+                      ->labels($sq->pluck('selected_answer'))
+                      ->elementLabel('Total')
+                      ->values($sq->pluck('total'))
+                      ->dimensions(400, 250)
+                      ->colors(['red', 'green', 'blue', 'yellow', 'orange', 'cyan', 'magenta'])
+                      ->responsive(true);
+          $charts[$question->id] = $chart;
+      }
+
+        return view('instructorside.quiz.show', compact('charts', 'quiz'));
     }
 }

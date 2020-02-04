@@ -9,7 +9,7 @@ class QuestionController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-    } 
+    }
 
     public function create(\App\Quiz $quiz){
         return view('instructorside.quiz.addquestion', compact('quiz'));
@@ -27,16 +27,16 @@ class QuestionController extends Controller
             'option_c' => '',
             'option_d' => '',
             'option_e' => '',
-            
+
         ]);
         //Takes the quiz we are working on tht was passed into the create function
         //Create a new question object with question()
         //And add the data to the new question for the quiz we're working on
         if (request('image') != null) {
-            $imagePath = request('image')->store('uploads', 'public'); 
+            $imagePath = request('image')->store('uploads', 'public');
         }
         else {$imagePath = null;}
-        
+
 
         $quiz->question()->create([
             'question_text' => $data['question_text'],
@@ -79,9 +79,9 @@ class QuestionController extends Controller
         );
 
         if (request('image') != null) {
-            $imagePath = request('image')->store('uploads', 'public'); 
+            $imagePath = request('image')->store('uploads', 'public');
         }
-        else {$imagePath = null;} //second option is driver to store your file. 
+        else {$imagePath = null;} //second option is driver to store your file.
                                                     //there are diff drivers, s3 for amazon, but we have local storage under public
         $question-> update([
             'question_text' => $data['question_text'],
@@ -99,8 +99,8 @@ class QuestionController extends Controller
 
         //dd($question->id);
 
-        
+
         return redirect('q/'.$question->quiz_id);
-    
+
     }
 }

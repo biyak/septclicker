@@ -42,11 +42,13 @@ $num=1
                  <button type="submit" id="delete" class="btn btn-danger" onclick="return confirm('Are you sure to delete the question?');">Delete</button>
               </form>
             </div>
+          <div>
             <div class="question"> <b> {{$question->question_text}}</b> </div>
             @if ($question->image !== null)
             <img src="/storage/{{$question->image}}" width="150" height = "100" style="border:2px solid black">
             @endif
 
+          <div style="display:inline-block;">
             @if ($question->option_a !== null)
             <p>
                     a) {{$question->option_a}}
@@ -81,9 +83,18 @@ $num=1
             <p>
                 Correct answer: {{$question->question_ans}}
             </p>
+          </div>
+            <div class="box">
+              <div class="body">
+                {!! $charts[$question->id]->html() !!}
+              </div>
+            </div>
+            {!! Charts::scripts() !!}
+            {!! $charts[$question->id]->script() !!}
                     <br>
                     <br>
         </div>
+      </div>
 @php
 $num++
 @endphp

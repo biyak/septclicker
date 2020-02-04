@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-            
+
 <body>
 
-            
+
             <div class = "container">
-                    <div class = "jumbotron"> 
-                        <div class= "row"> 
+                    <div class = "jumbotron">
+                        <div class= "row">
                                 <div class="col-md-8">
                                     <h2> {{$quiz->quiz_name}} </h2>
                                     <p>Instructor: {{Auth::user()->name}} </p>
@@ -29,7 +29,7 @@ $num=1
     <div > <a href="/{{$quiz->id}}/question/{{$question->id}}/edit" >
             <h3> Question {{$num}}</h3>
             <div class="question"> <b> {{$question->question_text}}</b> </div>
-        
+
             @if ($question->option_a !== null)
             <p>
                     a){{$question->option_a}}
@@ -66,7 +66,7 @@ $num=1
             </p>
                     <br>
                     <br>
-        </a> 
+        </a>
         </div>
 @php
 $num++
@@ -74,18 +74,18 @@ $num++
 @endforeach
 
 </div>
-</div>           
-</div> 
+</div>
+</div>
 <!-- Button trigger modal -->
 <div class="container">
 <div class ="jumbotron">
-<a href = "#"> <button type="button" class="btn btn-primary" > 
-                
+<a href = "#"> <button type="button" class="btn btn-primary" >
+
                 Launch quiz
-           </button> </a> 
+           </button> </a>
 </div>
 </div>
-    
+
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
@@ -93,8 +93,8 @@ $num++
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-    
 
-    
+
+
 </body>
 @endsection
