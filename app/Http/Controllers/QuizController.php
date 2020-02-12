@@ -23,8 +23,7 @@ class QuizController extends Controller
 
         $data = request()->validate([
             'quiz_name' => 'required',
-            'quiz_weight' => 'required',
-            'singular_questions' => 'required'
+            'quiz_weight' => 'required'
         ]);
         //need to get authenticated user
         $quiz = auth()->user()->quiz()->create($data);

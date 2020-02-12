@@ -14,7 +14,7 @@
 
                      </h3>
                      <table id="activequiztable"  style = "display:block;">
-                    @foreach(Auth::user() -> quiz as $quiz)
+                    @foreach($quizzes as $quiz)
                         <tr>
                             <td>
                                 <a href="/active/{{$quiz->id}}/launch" >

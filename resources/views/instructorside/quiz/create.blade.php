@@ -24,8 +24,6 @@
                     <div class="col-10">
                         <input class="form-control" type="number"
                         placeholder="Weight (%)" name="quiz_weight">
-                        <!-- Jenny make this an actual control pls - this controls single/multiple questions mode -->
-                        <input type="hidden" name="singular_questions" value="1"/>
                     </div>
                 </div>
 

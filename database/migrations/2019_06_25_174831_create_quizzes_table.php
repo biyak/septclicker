@@ -20,7 +20,6 @@ class CreateQuizzesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('quiz_name');
             $table->Integer('quiz_weight');
-            $table->boolean('singular_questions');
 
             $table->index('user_id');
         });

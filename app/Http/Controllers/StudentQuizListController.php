@@ -21,7 +21,8 @@ class StudentQuizListController extends Controller
         $user = auth()->user();
         //$this->authorize('view', $user->profile);
         //dd($user->profile);
-        return view('studentside/quiz/quizlist', ['user' => $user]);
+            // TODO: Whoever's doing quiz creation, there's no actual field that says whether or not it's enabled
+            return view('studentside/quiz/quizlist', ['quizzes' => \App\Quiz::get()]);
     }
 
 }
