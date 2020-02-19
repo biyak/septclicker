@@ -25,7 +25,7 @@
             <div class="container">
                 <a class="navbar-brand" href="/instructorhome" >
                     <div><img src="/svg/cloudclicker.png"> </div>
-                    <!-- Laravek starts in public so its just /svg/logo -->
+                    <!-- Laravel starts in public so its just /svg/logo -->
                     
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">

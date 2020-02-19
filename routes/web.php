@@ -17,6 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/password/reset/{token}/{email}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+
 Route::get('/profile/{user}', 'ProfilesController@index')->name('profile.show');
 
 //Route::get('/studenthome', 'HomeController@index')->name('Home');
@@ -87,3 +89,7 @@ Route::get('/studenthome', 'StudentHomeController@index')->name('studenthome.sho
 
 // Backend routes - these aren't meant for humans to use and will return JSON
 Route::get("/ajax/submitanswer/{question}/{answer}/{clientTime}","QuestionAttemptController@submitAnswer");
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
