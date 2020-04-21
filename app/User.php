@@ -56,6 +56,11 @@ class User extends Authenticatable
         return $this->hasMany(Course::class);
     }
 
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPassword($token));
+    }
+
     // public function isInstructor()
     // {
     //     $instructorRecord = \App\Instructor::where('user_id', $this->id)->first();
