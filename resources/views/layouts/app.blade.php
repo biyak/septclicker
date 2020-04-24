@@ -26,7 +26,7 @@
                 <a class="navbar-brand" href="/instructorhome" >
                     <div><img src="/svg/cloudclicker.png"> </div>
                     <!-- Laravel starts in public so its just /svg/logo -->
-                    
+
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -57,15 +57,16 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    
-                                <a class="dropdown-item" href="instructorquizlist/{{ Auth::user()->id }}">
+
+                                <a class="dropdown-item" href="{{Auth::user()->instructor ? "/instructorquizlist/" . Auth::user()->id : "/studentquizlist/" . Auth::user()->id}}">
                                         Quiz List
                                     </a>
 
-                                    <a class="dropdown-item" href="prlist">
-                                        Peer Review List
+                                    @if (Auth::user()->instructor === 0)
+                                    <a class="dropdown-item" href="/elevate">
+                                        Become Instructor
                                     </a>
-                                    
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -76,7 +77,7 @@
                                         @csrf
                                     </form>
 
-                                    
+
                                 </div>
                             </li>
                         @endguest

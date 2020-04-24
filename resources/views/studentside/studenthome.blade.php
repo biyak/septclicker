@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Welcome to your Student Dashboard, {{ Auth::user()->name }} !</div>    
+                <div class="card-header">Welcome to your Student Dashboard, {{ Auth::user()->name }} !</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -23,18 +23,18 @@
                             <h1 class="card-title">Quiz List</h1>
                         </div>
                     </a>
-
-                    <a href="/prlist" class="card img-fluid " style="height: 15rem">
+                    @if (Auth::user()->instructor === 0)
+                    <a href="/elevate" class="card img-fluid " style="height: 15rem">
                         <img class="card-img-top" >
                         <div class="card-img-overlay">
-                            <h1 class="card-title">Peer Review List</h1>
-
+                            <h1 class="card-title">Use Instructor Code</h1>
                         </div>
                     </a>
+                    @endif
                 </div>
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 </div>
 @endsection

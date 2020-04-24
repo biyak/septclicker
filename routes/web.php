@@ -87,6 +87,10 @@ Route::post('/active', 'QuizController@store');
 Route::get('/studentquizlist/{user}', 'StudentQuizListController@index')->name('studentquizlist.show');
 Route::get('/studenthome', 'StudentHomeController@index')->name('studenthome.show');
 
+//Routes for elevating users to instructor status
+Route::get('/elevate', 'ElevationController@index')->name('elevate.show');
+Route::post('/elevate', 'ElevationController@elevate')->name('elevate.post');
+
 // Backend routes - these aren't meant for humans to use and will return JSON
 Route::get("/ajax/submitanswer/{question}/{answer}/{clientTime}","QuestionAttemptController@submitAnswer");
 
