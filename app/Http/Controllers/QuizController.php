@@ -42,7 +42,17 @@ class QuizController extends Controller
     }
 
     public function launch(\App\Quiz $quiz){
-        return view('instructorside/quiz/launch', compact('quiz'));
+
+      $data = request()->validate(
+          ['active' => '']
+      );
+
+        $quiz -> update(
+            ['active' => '1']
+        );
+
+
+      return view('instructorside.quiz.launch', compact('quiz'));
     }
 
     public function update(\App\Quiz $quiz){
@@ -77,6 +87,20 @@ class QuizController extends Controller
           $charts[$question->id] = $chart;
       }
 
-        return view('instructorside.quiz.show', compact('charts', 'quiz'));
+      $result = DB::table('quizzes')->select('active')->where('id', $quiz -> id)->first();
+      $stop = 1;
+      if($result->active == 1 && $stop == 1) {
+        $quiz -> update(
+            ['active' => '0']
+        );
+        $button = ["Launch Quiz", "primary", "INACTIVE"];
+        return view('instructorside.quiz.show', compact('button','charts','quiz'));
+      }
+      $quiz -> update(
+          ['active' => '1']
+      );
+      $button = ["Stop Quiz","danger","ACTIVE"];
+      return view('instructorside.quiz.show', compact('button','charts','quiz'));
+
     }
 }
