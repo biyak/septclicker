@@ -18,6 +18,10 @@
                                             Add Questions
                                             </button>
                                         </a>
+                                        <a href ='{{$quiz->id}}/result' > <button type="button" class="btn btn-warning" >
+                                            See Results
+                                            </button>
+                                        </a>
                                 </div>
                         </div>
                     </div>
