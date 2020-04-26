@@ -68,6 +68,7 @@ Route::get('{quiz}/question/{question}/live', 'SubmittedQuestionController@live'
 Route::post('{quiz}/question/{question}', 'SubmittedQuestionController@store')->name('{question}.store');
 Route::get('{quiz}/question/{question}/responses', 'SubmittedQuestionController@show')->name('{question}.show')->middleware("BlockStudents");
 
+//TestBank
 Route::get('/testbank', 'TestBankController@index')->name('TestBank')->middleware("BlockStudents");
 
 //STUDENT SIDE
