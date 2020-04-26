@@ -31,6 +31,9 @@ class SubmittedQuestionController extends Controller
     }
 
     public function show(\App\Quiz $quiz, \App\Question $question){
+        if ($quiz->user_id !== auth()->user()->id){
+            return abort(403, "Results are only visible to the creating instructor");
+        }
         return view('instructorside.quizresponses.questionresponses', compact('quiz', 'question'));
     }
 
