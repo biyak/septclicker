@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\SubmittedQuestion;
 use Charts;
 use DB;
+use Excel;
+use Maatwebsite\Excel\Concerns\FormCollection;
 
 class QuizController extends Controller
 {
@@ -131,5 +133,49 @@ class QuizController extends Controller
         $list[$id] = ['id'=>$id,'grade'=> round($correct/$numOfQues,2), 'correct' => $correct, 'total' => $numOfQues];
       }
       return view('instructorside.quiz.result', compact('list','quiz','numOfStudents'));
+    }
+
+    public function download(\App\Quiz $quiz){
+      $list = [];
+      $attemptedQues = DB::table("quiz_attempts")->join("questions","quiz_attempts.quiz_id","=","questions.quiz_id")
+                ->join("question_attempts","question_attempts.question_id","=","questions.id")
+                ->select('question_attempts.student_id AS student_id',"questions.id AS question","selected_answer","question_ans")->where('questions.quiz_id',$quiz->id) -> get();
+      // $correctAnswers = DB::table("questions")->select("id","question_ans")->where("quiz_id", $quiz->id) -> get();
+      // $attemptedQuestions = DB::table("question_attempts")->select("question_id","student_id","selected_answer")->where("quiz_id")
+      $numOfQues = $attemptedQues->count("DISTINCT question");
+      $numOfStudents = $attemptedQues->count("DISTINCT student_id");
+      $ids = [];
+      $result = json_decode($attemptedQues, true);
+      foreach($result as $r) {
+        if(!in_array($r['student_id'], $ids)){
+          array_push($ids, $r['student_id']);
+        }
+      }
+
+      foreach($ids as $id) {
+        $correct = 0;
+        foreach($result as $r){
+          if($r['student_id'] == $id && $r['selected_answer'] == $r['question_ans']){
+            $correct++;
+          }
+        }
+        $list[$id] = ['id'=>$id,'grade'=> round($correct/$numOfQues,2), 'correct' => $correct, 'total' => $numOfQues];
+      }
+
+      $headers = array(
+          "Content-type" => "text/csv"
+      );
+
+      $columns = array('student_id', 'grade');
+
+          $name = "result.csv";
+          $file = fopen($name, 'w');
+          fputcsv($file, $columns);
+
+          foreach($list as $s) {
+              fputcsv($file, array($s['id'],$s['grade']));
+          }
+          fclose($file);
+      return response()->download($name, 'result.csv', $headers);
     }
 }
