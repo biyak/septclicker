@@ -17,7 +17,7 @@
                     @foreach($user -> quiz as $quiz)
                         <tr>
                             <td>
-                                <a href="/q/{{$quiz->id}}/edit" >
+                                <a href="/q/{{$quiz->id}}/responses" >
                                     {{$quiz->quiz_name}} - ( {{$quiz->quiz_weight}} %)
                                 </a>
                             </td>
@@ -32,11 +32,11 @@
               <br>
 
                 <div id="activequiz">
-                <h3> 
-                    Inactive Quizzes 
+                <h3>
+                    Inactive Quizzes
                     <button id="pastbutton" class="btn btn-outline-primary btn-sm" onclick = "clickhidePast()"> - </button>
 
-                </h3> 
+                </h3>
                 <table id="pastquiztable" style = "display:none;">
                         <tr>
                             <td>
@@ -66,7 +66,7 @@
                      </table>
                 </div>
 
-                <div class="text-right"> 
+                <div class="text-right">
              <a href="/q/create"> Create New Quiz</a>
                  </div>
         </div>
@@ -78,7 +78,7 @@
 
 
 
-        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script> 
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
     <script>
         function clickhidePast() {

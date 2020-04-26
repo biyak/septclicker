@@ -45,6 +45,46 @@ class QuizController extends Controller
         return view('instructorside/quiz/launch', compact('quiz'));
     }
 
+    public function responses(\App\Quiz $quiz){
+
+        if ($quiz->user_id !== auth()->user()->id){
+            return abort(403, "Only the creator of this quiz can view the results");
+        }
+
+        $results = array();
+
+        $total = 0;
+
+        // Initialize everyone who attempted the quiz
+        foreach($quiz->attempts()->get() as $attempt){
+            $results[$attempt->student_id] = 0;
+        }
+
+        foreach($quiz->question()->get() as $question){
+            $total++;
+            foreach($question->attempts()->get() as $attempt){
+                if ($attempt->selected_answer === $question->question_ans){
+                    $results[$attempt->student_id] += 1;
+                }
+            }
+        }
+
+        $resolvedResults = array();
+
+        foreach($results as $sid => $grade){
+            $resolvedResults[\App\User::where('id',$sid)->get()[0]->name] = $grade;
+        }
+
+        // Also return an array of questions + ids for use in the detailed view
+        $questions = [];
+
+        foreach($quiz->question()->get() as $question){
+            $questions[$question->id] = $question->question_text;
+        }
+
+        return view('instructorside/quizresponses/show', ['results' => $resolvedResults, 'total' => $total, 'questions' => $questions] + compact('quiz'));
+    }
+
     public function update(\App\Quiz $quiz){
         $data = request()->validate(
             ['quiz_name' => '',

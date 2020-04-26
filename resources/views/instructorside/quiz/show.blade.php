@@ -106,9 +106,9 @@ $num++
 <!-- Button trigger modal -->
 <div class="container">
 <div class ="jumbotron">
-<a href = "{{$quiz->id}}/launch"> <button type="button" class="btn btn-primary" >
+<a href = "/instructorquizlist/{{auth::user()->id}}"> <button type="button" class="btn btn-primary" >
 
-                Launch Quiz
+                Done
            </button> </a>
 </div>
 </div>
