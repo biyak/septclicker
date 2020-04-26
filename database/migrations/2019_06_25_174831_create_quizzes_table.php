@@ -20,7 +20,7 @@ class CreateQuizzesTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('quiz_name');
             $table->Integer('quiz_weight');
-
+            $table->Integer('active');
             $table->index('user_id');
         });
     }
