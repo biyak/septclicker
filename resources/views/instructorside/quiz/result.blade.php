@@ -13,7 +13,7 @@
                                         <p>Instructor: {{$quiz->user->name}} </p>
                                         <p> Weight: {{$quiz->quiz_weight}}%</p>
                                         <p> Total number of students attended: {{$numOfStudents}}</p>
-                                        <button type="button" class="btn btn-primary" >
+                                        <a href="result-csv"><button type="button" class="btn btn-primary" >
                                             Download Result
                                             </button>
                                         </a>

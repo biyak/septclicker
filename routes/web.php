@@ -53,6 +53,7 @@ Route::get('/q/{quiz}/edit', 'QuizController@edit')->name('{quiz}.edit')->middle
 Route::patch('/q/{quiz}/', 'QuizController@update')->name('{quiz}.update')->middleware("BlockStudents");
 //See quiz result
 Route::get('/q/{quiz}/result','QuizController@result')->name('{quiz}.result')->middleware("BlockStudents");
+Route::get('/q/{quiz}/result-csv','QuizController@download')->name('{quiz}.download')->middleware("BlockStudents");
 
 //Creating and displaying questions
 Route::get('{quiz}/question/create', 'QuestionController@create')->middleware("BlockStudents");
