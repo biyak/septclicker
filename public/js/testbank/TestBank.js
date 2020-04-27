@@ -1,45 +1,19 @@
 (function() {
     const myQuestions = [
       {
-        question: "Match the Following", 
-        answers: {apple: "red", banana: "yellow", 
-          mango: "orange", grape: "purple", kiwi: "brown", lime: "green"},
-        correctAnswer: "d",
-        type: "M",
-        qID: "0"
-      },  
-      {
             question: "What is 2 + 2?", 
             answers: {a: "1", b: "2", c: "3", d: "4"},
             correctAnswer: "d",
             type: "MC",
             qID: "1"
         },
-    
-        {
-          question: "Dogs can fly", 
-          answers: {a: "True", b: "False"},
-          correctAnswer: "b",
-          type: "TF",
-          qID: "2"
-        },
-
-        {
-          question: "What is the meaning of life?", 
-          answers: {a: "Bye", b: "Hey", c: "Hi", d: "What's up"},
-          correctAnswer: "a",
-          type: "SA", //long answer
-          qID: "3"
-      },
-
       {
         question: "When an object is in free fall,", 
         answers: {a: "Acceleration", b: "Speed", c: "Velocity", d: "Slope"},
         correctAnswer: "a",
-        type: "MC", //long answer,
+        type: "MC", 
         qID: "4"
     },
-
     {
       question: "Which of the following is not true of gases, as compared to liquids or solids?", 
       answers: {a: "Gas molecules are in constant, rapid motion",
@@ -47,7 +21,7 @@
        c: "The kinetic energy of a gas is directly proportional to its temperature.", 
        d: "The volume of a gas molecule itself is very small compared to the space the gas occupies."},
       correctAnswer: "a",
-      type: "MC", //long answer,
+      type: "MC", 
       qID: "5"
   },
   
@@ -61,81 +35,21 @@
       myQuestions.forEach((currentQuestion, questionNumber) => {
         // we'll want to store the list of answer choices
         const answers = [];
-        if (currentQuestion.type === "MC") {
-            // and for each available answer...
-            for (letter in currentQuestion.answers) {
-              // ...add an HTML radio button
-              answers.push(
-                `<label>
-                    ${letter} :
-                    ${currentQuestion.answers[letter]}
-                </label>
-                </br>`
-              );
-            }  
-            answers.push(`<br>`) 
-        }
-
-        if (currentQuestion.type === "M") {
-          // and for each available answer...
-          //Randomize the values in an array
-          var val = Object.values(currentQuestion.answers);
-          shuffle(val);
-          
-          var counter = 0;
-
-          answers.push(`              
-          <table style="width:100%">
-          <tr>
-            <th> Match This </th>
-            <th> With This </th>
-          </tr>
-          `)
-
-          for (key in currentQuestion.answers) {
-            // ...add an HTML radio button
-            answers.push(
-              `<tr>
-              <td> 
-                  ${key} 
-              </td>
-              <td>
-                ${counter + 1}: ${val.pop()}
-              </td>
-            </tr>
-           `
-            );
-            counter = counter + 1;
-          }   
-          answers.push(`</table> <br>`)
-      }
-
-        if (currentQuestion.type === "TF") {
+        
           // and for each available answer...
           for (letter in currentQuestion.answers) {
             // ...add an HTML radio button
             answers.push(
               `<label>
-                ${currentQuestion.answers[letter]}
-            </label>
-            </br>`
+                  ${letter} :
+                  ${currentQuestion.answers[letter]}
+              </label>
+              </br>`
             );
-          }   
-          answers.push(`<br>`)
-      }
-
-      if (currentQuestion.type === "SA") {
-        // and for each available answer...
-
-          answers.push(
-            `<label>
-              <p> Text response</p>
-            </label>
-            <br>
-            <br>`
-          );
+          }  
+          answers.push(`<br>`) 
         
-    }
+
         // add this question and its answers to the output
         output.push(
           //class = "jumbotron"
@@ -240,10 +154,10 @@
 
     });
 
-    $("#AddQuestionBtn").click(function(){
+   // $("#AddQuestionBtn").click(function(){
 
-      console.log(hello)
-    })
+     // console.log(hello)
+    //})
 
     //submitButton.addEventListener("click", createNewQuiz);
 

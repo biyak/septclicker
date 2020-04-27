@@ -67,7 +67,8 @@
                 </div>
 
                 <div class="text-right"> 
-             <a href="/q/create"> Create New Quiz</a>
+                    <a href="/testbank"> View Test Bank</a><br>
+                    <a href="/q/create"> Create New Quiz</a>
                  </div>
         </div>
 

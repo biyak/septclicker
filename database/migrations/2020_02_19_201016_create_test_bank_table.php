@@ -16,7 +16,7 @@ class CreateTestBankTable extends Migration
         Schema::create('test_bank', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->bigInteger('course_id')->unsigned();
+            $table->bigInteger('course_id')->unsigned()->nullable();
             $table->foreign('course_id')->references('id')->on('courses');
 
             $table->bigInteger('instructor_id')->unsigned();

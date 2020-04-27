@@ -102,6 +102,11 @@
                         <p>Enter one letter from a-e that represents the correct option</p>
                 </div>
             </div>
+
+            <div align="center">
+            <input type="checkbox" id="testbankadd" value="yes">
+            <label for="testbankadd">Add question to test bank</label><br><br>
+            </div>
             
         </div>
     </div>
