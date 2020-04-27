@@ -110,6 +110,7 @@ $num++
 <!-- Button trigger modal -->
 <div class="container">
 <div class ="jumbotron">
+
 <a href = ""> <button type="button" class="btn btn-{{$button[1]}}" onclick="return confirm('Are you sure you want to proceed?')">
 
                 {{$button[0]}}

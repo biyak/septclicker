@@ -17,6 +17,10 @@ class StudentHomeController extends Controller {
      */
     public function index()
     {
+        // If the logged in user is an instructor, send them to instructorhome
+        if (auth()->user()->instructor === 1){
+            return redirect('/instructorhome');
+        }
         return view('studentside/studenthome');
     }
 }

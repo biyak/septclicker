@@ -64,6 +64,9 @@ Route::get('{quiz}/question/{question}', 'QuestionController@show')->middleware(
 Route::get('{quiz}/question/{question}/edit', 'QuestionController@edit')->name('{question}.edit')->middleware("BlockStudents");
 Route::patch('{quiz}/question/{question}', 'QuestionController@update')->name('{question}.update')->middleware("BlockStudents");
 
+// Seeing quiz responses
+Route::get('/q/{quiz}/responses', 'QuizController@responses')->name('{quiz}.responses');
+
 //Live quizzes
 Route::get('{quiz}/question/{question}/live', 'SubmittedQuestionController@live')->name('{question}.live');
 Route::post('{quiz}/question/{question}', 'SubmittedQuestionController@store')->name('{question}.store');
