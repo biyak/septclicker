@@ -74,8 +74,8 @@ Route::get('{quiz}/question/{question}/responses', 'SubmittedQuestionController@
 
 //TestBank
 Route::get('/testbank', 'TestBankController@index')->name('TestBank')->middleware("BlockStudents");
-Route::get('/testbank/addQuestion', 'TestBankController@addQ')->name('AddQuestion')->middleware("BlockStudents");
-Route::get('/testbank', 'testBankController@add')->name('TestBank')->middleware("BlockStudents");
+//Route::get('/testbank/addQuestion', 'TestBankController@addQ')->name('AddQuestion')->middleware("BlockStudents");
+//Route::get('/testbank', 'testBankController@add')->name('TestBank')->middleware("BlockStudents");
 
 
 

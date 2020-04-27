@@ -27,15 +27,11 @@
 <script>
 //Keep track of selected questions
 const selectedQuestions = new Set();
-
-function getQuestionText(qid){
-    myarray = $.map($questionData, function(value, index){
-        return [value];
-    });
-    return myarray;
-    
-}
 </script>
+
+@php
+$num=1
+@endphp
 
 @if ($questions != null)
     @foreach ($questions as $q)
@@ -43,12 +39,31 @@ function getQuestionText(qid){
             <div class="jumbotron questionjumbo" style="background: lightgrey" id="{{$q->id}}"> 
                 <div class="row">
                     <div class="col-md-8">
-                        <div class="question"> <b>  {{$q->id}}. <script>getQuestionText({{$q->id}})</script> </b> </div>
-                        <div class="answers"> DISPLAY ANSWERS </div>
+                        <div class="question"> <b>  {{$num}}. {{$q->question_text}} </b> </div><br>
+                        <div class="answers">
+                            @if ($q->option_a != null)
+                                <label>A : {{$q->option_a}}</label><br>
+                            @endif
+                            @if ($q->option_b != null)
+                                <label>B : {{$q->option_b}}</label><br>
+                            @endif
+                            @if ($q->option_c != null)
+                                <label>C : {{$q->option_c}}</label><br>
+                            @endif
+                            @if ($q->option_d != null)
+                                <label>D : {{$q->option_d}}</label><br>
+                            @endif
+                            @if ($q->option_e != null)
+                                <label>E : {{$q->option_e}}</label><br>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>           
         </div>
+    @php
+    $num++
+    @endphp
     @endforeach
 @else
     <div class = "container"> 
@@ -71,12 +86,10 @@ $(".questionjumbo").click(function(){
         if (bg == 'lightgreen'){
             (this).style.backgroundColor = "lightgrey";
             selectedQuestions.delete(num);
-            console.log(selectedQuestions);
         }
         else {
             (this).style.backgroundColor = "lightgreen";
             selectedQuestions.add(num);
-            console.log(selectedQuestions);
         }
     });
 </script>

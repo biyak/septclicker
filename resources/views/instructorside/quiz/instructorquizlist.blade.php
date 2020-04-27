@@ -66,14 +66,9 @@
                      </table>
                 </div>
 
-<<<<<<< HEAD
                 <div class="text-right"> 
                     <a href="/testbank"> View Test Bank</a><br>
                     <a href="/q/create"> Create New Quiz</a>
-=======
-                <div class="text-right">
-             <a href="/q/create"> Create New Quiz</a>
->>>>>>> 0336f87e972e9dae3a00f4f3d288b0131c042a96
                  </div>
         </div>
 

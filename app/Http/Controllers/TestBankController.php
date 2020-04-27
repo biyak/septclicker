@@ -17,18 +17,8 @@ class TestBankController extends Controller
 
         $instructor = auth()->user()->id;
 
-        $questions = DB::select('select * from test_bank where instructor_id = ?', array($instructor));
+        $questions = DB::select('select * from questions left join test_bank on questions.id = test_bank.question_id where test_bank.instructor_id = ?',array($instructor));
 
-        $questionData = [];
-
-        foreach ($questions as $q){
-
-            $values = DB::select('select * from questions where id = ?', array($q->question_id));
-
-            array_push($questionData,$values);
-
-        }
-        
-        return view('instructorside/quiz/testbank/testbank',compact('questions','questionData'));
+        return view('instructorside/quiz/testbank/testbank',compact('questions'));
     }
 }
