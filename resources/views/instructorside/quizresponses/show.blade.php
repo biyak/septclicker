@@ -26,13 +26,13 @@
 
                                 </div>
                                 @if ($active == 1)
-                                <form method="post" action="" style="text-align:right;display:inline-block;">
+                                <form method="post" action="" style="text-align:right;display:inline-block;" onclick="return confirm('Are you sure to stop the quiz?');">
                                   @csrf
                                   <input type="submit" class="btn btn-danger" name="stop_button" value="Stop Quiz"/>
                                 </form>
                                 @endif
                                 @if ($active == 0)
-                                <form method="post" action="" style="text-align:right;display:inline-block;">
+                                <form method="post" action="" style="text-align:right;display:inline-block;" onclick="return confirm('Are you sure to start the quiz?');">
                                   @csrf
                                 <input type="submit" class="btn btn-primary" name="start_button" value= "Start Quiz"/>
                                 @endif
@@ -41,6 +41,11 @@
                                   See Results
                               </button>
                               </a>
+                              <script>
+                                if ( window.history.replaceState ) {
+                                    window.history.replaceState( null, null, window.location.href );
+                                  }
+                                </script>
                     </div>
                 </div>
 

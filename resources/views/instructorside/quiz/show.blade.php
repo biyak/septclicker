@@ -38,8 +38,8 @@ $num=1
               <a href="/{{$quiz->id}}/question/{{$question->id}}/edit" ><button type="button" class="btn btn-light">Edit</button></a>
               <form action="" method="post" style="display:inline-block;">
                  @csrf
-                 @method('PATCH')
-                 <button type="submit" id="delete" class="btn btn-danger" onclick="return confirm('Are you sure to delete the question?');">Delete</button>
+                 <input type="hidden" name="question_id" value={{$question->id}} />
+                 <input type="submit" class="btn btn-danger" name="delete_question" value="Delete" onclick="return confirm('Are you sure to delete the question?');"/>
               </form>
             </div>
           <div>
@@ -102,7 +102,7 @@ $num++
 
 <a href = "{{$quiz->id}}/responses"> <button type="button" class="btn btn-primary">
 
-                Go Back
+                Go back to quiz
            </button> </a>
 </div>
 </div>

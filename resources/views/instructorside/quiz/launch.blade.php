@@ -100,7 +100,12 @@ $num++
 
   <form method="post" action="../{{$quiz->id}}/responses" onclick="return confirm('Are you sure to launch the quiz?')">
     @csrf
-  <input type="submit" class="btn btn-primary" name="start_button" value= "Launch Quiz"/>
+  <input type="submit" class="btn btn-primary" name="start_button" value= "Start Quiz"/>
+  <script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+      }
+    </script>
 </form>
 
 </div>

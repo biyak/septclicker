@@ -45,16 +45,13 @@ class QuizController extends Controller
 
     public function launch(\App\Quiz $quiz){
 
-      $data = request()->validate(
-          ['active' => '']
-      );
+      $result = DB::table('quizzes')->select('active')->where('id', $quiz -> id)->first();
+      $active = $result -> active;
 
-        $quiz -> update(
-            ['active' => '1']
-        );
-
-
-      return view('instructorside.quiz.launch', compact('quiz'));
+      if ($active==1) {
+        return view('instructorside.quiz.show', compact('quiz', 'active'));
+      }
+      return view('instructorside.quiz.launch', compact('quiz', 'active'));
     }
 
     public function responses(\App\Quiz $quiz){
@@ -97,6 +94,11 @@ class QuizController extends Controller
 
         //show chart
         $charts = $this -> getCharts($quiz);
+        if(request()->launch_button) {
+           $quiz->update(
+             ['active'=>1]
+           );
+        }
         $active =  DB::table('quizzes')->select('active')->where('id', $quiz -> id)->get()[0]->active;
         return view('instructorside/quizresponses/show', ['results' => $resolvedResults, 'total' => $total, 'questions' => $questions] + compact('quiz','charts', 'active'));
     }
@@ -261,5 +263,17 @@ class QuizController extends Controller
 
       $charts = $this->getCharts($quiz);
       return view('instructorside.quizresponses.show', ['results'=>$resolvedResults]+compact('active','quiz','charts'));
+    }
+
+    public function delete(\App\Quiz $quiz){
+      $question_id = request()->question_id;
+      foreach($quiz -> question() -> get() as $question) {
+        if($question->id == $question_id) {
+          $question->update(
+              ['quiz_id' => 0]
+            );
+        }
+      }
+      return view('instructorside.quiz.show', compact('quiz'));
     }
 }

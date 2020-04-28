@@ -120,9 +120,14 @@
             <div align="right" >
             <a href="../../instructorhome"> <button type="button" class="btn btn-secondary" id="saveExitBtn">Exit Quiz</button> </a>
             <button type="Submit" class="btn btn-success" id="saveAddQBtn">Save Question</button>
-            <a href='../../q/{{$quiz->id}}/launch'> <button type="button"class="btn btn-primary"> Review Quiz </button> </a>
+            <a href='../../q/{{$quiz->id}}'> <button type="button"class="btn btn-primary"> Review Quiz </button> </a>
             </div>
         </form>
+        <script>
+          if ( window.history.replaceState ) {
+              window.history.replaceState( null, null, window.location.href );
+            }
+          </script>
     </div>
     </div>
 
