@@ -104,8 +104,8 @@
             </div>
 
             <div align="center">
-            <input type="checkbox" id="testbankadd" value="yes">
-            <label for="testbankadd">Add question to test bank</label><br><br>
+                <input class="form-control" type="checkbox" id="testbankadd" name="testbankadd" value="yes" >
+                <label for="testbankadd">Add question to test bank</label><br><br>
             </div>
             
         </div>

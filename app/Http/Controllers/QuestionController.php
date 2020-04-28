@@ -51,7 +51,7 @@ class QuestionController extends Controller
         ]);
 
         if (isset($data['testbankadd'])){
-            $q  = DB::select('select * from questions where question_text = ?',array($data['question_text']));
+            $q  = DB::select('select * from questions where (question_text,question_ans) = (?,?)',array($data['question_text'],$data['question_ans']));
             $iid = auth()->user()->id;
             $qid = $q[0]->id;
 
@@ -62,6 +62,7 @@ class QuestionController extends Controller
     }
 
     public function edit(\App\Quiz $quiz, \App\Question $question){
+
         return view('instructorside/quiz/question/edit', compact('quiz', 'question'));
     }
 
@@ -82,6 +83,7 @@ class QuestionController extends Controller
             'option_c' => '',
             'option_d' => '',
             'option_e' => '',
+            'testbankadd' => '',
             ]
         );
 
@@ -102,6 +104,35 @@ class QuestionController extends Controller
             'option_e' => $data['option_e'],
         ]);
 
+        //Get question id
+        $q  = DB::select('select * from questions where (question_text,question_ans) = (?,?)',array($data['question_text'],$data['question_ans']));
+        $qid = $q[0]->id;
+
+        //Check if question is in testbank
+        $contains = DB::select('select * from test_bank where question_id = ?',array($qid));
+
+        //Question is in test bank
+        if (isset($contains)){
+            if (! isset($data['testbankadd'])){
+                DB::delete('delete from test_bank where question_id = ?', array($qid));
+            }
+        }
+        //Question not in test bank
+        else {
+            if (isset($data['testbankadd'])){
+                DB::insert('insert into test_bank (instructor_id,question_id) values (?,?)', array($iid,$qid));
+            }
+        }
+
+        //if (isset($data['testbankadd'])){
+           // $q  = DB::select('select * from questions where (question_text,question_ans) = (?,?)',array($data['question_text'],$data['question_ans']));
+            //$iid = auth()->user()->id;
+            //$qid = $q[0]->id;
+
+            //DB::insert('insert into test_bank (instructor_id,question_id) values (?,?)',array($iid,$qid));
+        //}
+
+        
         //auth()->user()->quiz()->update($data);
 
         //dd($question->id);
