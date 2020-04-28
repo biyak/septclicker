@@ -23,7 +23,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="/instructorhome" >
+                <a class="navbar-brand" href="/studenthome" >
                     <div><img src="/svg/cloudclicker.png"> </div>
                     <!-- Laravel starts in public so its just /svg/logo -->
 

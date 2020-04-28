@@ -107,4 +107,4 @@ Route::get("/ajax/submitanswer/{question}/{answer}/{clientTime}","QuestionAttemp
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
