@@ -26,21 +26,26 @@
 
                                 </div>
                                 @if ($active == 1)
-                                <form method="post" action="" style="text-align:right;display:inline-block;" onclick="return confirm('Are you sure to stop the quiz?');">
+                                <form method="post" action="" style="text-align:right;display:inline-block;padding-left: 15px;padding-right: 15px;" onclick="return confirm('Are you sure to stop the quiz?');">
                                   @csrf
-                                  <input type="submit" class="btn btn-danger" name="stop_button" value="Stop Quiz"/>
+                                  <input type="submit" class="btn btn-warning" name="stop_button" value="Stop Quiz"/>
                                 </form>
                                 @endif
                                 @if ($active == 0)
-                                <form method="post" action="" style="text-align:right;display:inline-block;" onclick="return confirm('Are you sure to start the quiz?');">
+                                <form method="post" action="" style="text-align:right;display:inline-block;padding-left: 15px;padding-right: 15px;" onclick="return confirm('Are you sure to start the quiz?');">
                                   @csrf
-                                <input type="submit" class="btn btn-primary" name="start_button" value= "Start Quiz"/>
+                                <input type="submit" class="btn btn-success" name="start_button" value= "Start Quiz"/>
                                 @endif
                               </form>
-                              <a href ='responses/result' > <button type="button" class="btn btn-warning" >
+                              <a href ='responses/result' > <button type="button" class="btn btn-secondary">
                                   See Results
                               </button>
                               </a>
+                            <form method="post" action="" style="text-align:right;display:inline-block;float:right;" onclick="return confirm('Are you sure to DELETE the quiz?');">
+                              @csrf
+                              <input type="submit" class="btn btn-danger" name="delete_button" value= "Delete Quiz"/>
+
+                            </form>
                               <script>
                                 if ( window.history.replaceState ) {
                                     window.history.replaceState( null, null, window.location.href );

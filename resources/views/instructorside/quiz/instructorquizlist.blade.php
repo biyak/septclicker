@@ -15,6 +15,7 @@
                      </h3>
                      <table id="activequiztable"  style = "display:block;">
                     @foreach($user -> quiz as $quiz)
+                      @if($quiz->deleted == 0 && $quiz->active==1)
                         <tr>
                             <td>
                                 <a href="/q/{{$quiz->id}}/responses" >
@@ -22,7 +23,7 @@
                                 </a>
                             </td>
                         </tr>
-
+                      @endif
                     @endforeach
 
 
@@ -37,36 +38,23 @@
                     <button id="pastbutton" class="btn btn-outline-primary btn-sm" onclick = "clickhidePast()"> - </button>
 
                 </h3>
-                <table id="pastquiztable" style = "display:none;">
-                        <tr>
-                            <td>
-                                4C03 Quiz 6 (Interactive Quiz)
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                3MI3 Midterm 1
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                4C03 Quiz 5 (Interactive Quiz)
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                4C03 Quiz 4 (Interactive Quiz)
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                4C03 Quiz 3 (Interactive Quiz)
-                            </td>
-                        </tr>
+
+                <table id="pastquiztable" style = "display:block;">
+                  @foreach($user -> quiz as $quiz)
+                    @if($quiz->active == 0 && $quiz->deleted == 0)
+                      <tr>
+                          <td>
+                              <a href="/q/{{$quiz->id}}/responses" >
+                                  {{$quiz->quiz_name}} - ( {{$quiz->quiz_weight}} %)
+                              </a>
+                          </td>
+                      </tr>
+                    @endif
+                  @endforeach
                      </table>
                 </div>
 
-                <div class="text-right"> 
+                <div class="text-right">
                     <a href="/testbank"> View Test Bank</a><br>
                     <a href="/q/create"> Create New Quiz</a>
                  </div>
@@ -114,3 +102,9 @@
 
 
 @endsection
+
+<script>
+  if ( window.history.replaceState ) {
+      window.history.replaceState( null, null, window.location.href );
+    }
+  </script>

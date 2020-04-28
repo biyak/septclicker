@@ -10,7 +10,7 @@ class InstructorQuizListController extends Controller
     {
         $this->middleware('auth');
     }
- 
+
     /**
      * Show the application dashboard.
      *
@@ -22,6 +22,15 @@ class InstructorQuizListController extends Controller
         //$this->authorize('view', $user->profile);
         //dd($user->profile);
         return view('instructorside/quiz/instructorquizlist', ['user' => $user]);
+    }
+
+    public function delete(\App\Quiz $quiz) {
+          $quiz -> update(
+            ['deleted' => 1]
+          );
+
+        $user = auth()->user();
+        return view('instructorside/quiz/instructorquizlist/'.auth()->user()->id, compact('user'));
     }
 
 }

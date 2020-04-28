@@ -22,6 +22,7 @@ class CreateQuizzesTable extends Migration
             $table->Integer('quiz_weight');
             $table->Integer('active')->default(0);
             $table->index('user_id');
+            $table->Integer('deleted')->default(0);
         });
     }
 

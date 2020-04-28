@@ -60,7 +60,6 @@ class QuizController extends Controller
             return abort(403, "Only the creator of this quiz can view the results");
         }
 
-
         $results = array();
 
         $total = 0;
@@ -216,6 +215,15 @@ class QuizController extends Controller
     }
 
     public function changeStatus(\App\Quiz $quiz){
+      $buttonPressed = request()->delete_button;
+      if($buttonPressed=="Delete Quiz") {
+        $quiz -> update(
+          ['deleted' => 1],
+          ['active' => 0]
+        );
+        $user = auth()->user();
+        return view('instructorside/quiz/instructorquizlist', compact('user'));
+      }
       $results = array();
 
       $total = 0;
@@ -274,6 +282,7 @@ class QuizController extends Controller
             );
         }
       }
+
       return view('instructorside.quiz.show', compact('quiz'));
     }
 }

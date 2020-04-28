@@ -69,6 +69,7 @@ Route::patch('{quiz}/question/{question}', 'QuestionController@update')->name('{
 Route::get('/q/{quiz}/responses', 'QuizController@responses')->name('{quiz}.responses');
 Route::post('/q/{quiz}/responses', 'QuizController@changeStatus')->name('{quiz}.changeStatus');
 
+
 //Live quizzes
 Route::get('{quiz}/question/{question}/live', 'SubmittedQuestionController@live')->name('{question}.live');
 Route::post('{quiz}/question/{question}', 'SubmittedQuestionController@store')->name('{question}.store');

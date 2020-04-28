@@ -15,6 +15,7 @@
                      </h3>
                      <table id="activequiztable"  style = "display:block;">
                     @foreach($quizzes as $quiz)
+                        @if($quiz->deleted == 0 && $quiz->active==1)
                         <tr>
                             <td>
                                 <a href="/active/{{$quiz->id}}/launch" >
@@ -22,7 +23,7 @@
                                 </a>
                             </td>
                         </tr>
-
+                        @endif
                     @endforeach
 
 
@@ -38,31 +39,18 @@
 
                 </h3>
                 <table id="pastquiztable" style = "display:none;">
-                        <tr>
-                            <td>
-                                4C03 Quiz 6 (Interactive Quiz)
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                3MI3 Midterm 1
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                4C03 Quiz 5 (Interactive Quiz)
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                4C03 Quiz 4 (Interactive Quiz)
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                4C03 Quiz 3 (Interactive Quiz)
-                            </td>
-                        </tr>
+                  @foreach($user -> quiz as $quiz)
+                    @if($quiz->active == 0 && $quiz->deleted == 0)
+                      <tr>
+                          <td>
+                              <a href="/q/{{$quiz->id}}/responses" >
+                                  {{$quiz->quiz_name}} - ( {{$quiz->quiz_weight}} %)
+                              </a>
+                          </td>
+                      </tr>
+                    @endif
+                  @endforeach
+
                      </table>
                 </div>
 <!--
