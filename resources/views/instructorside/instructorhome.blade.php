@@ -26,8 +26,16 @@
                         <img class="card-img-top" >
                         <div class="card-img-overlay">
                             <h1 class="card-title">Quiz List</h1>
-                        </div>
+                        </div>z
                     </a>
+
+                        <a href="/prlist" class="card img-fluid " style="height: 15rem">
+                            <img class="card-img-top" >
+                            <div class="card-img-overlay">
+                                <h1 class="card-title">Peer Review List</h1>
+
+                            </div>
+                        </a>
 
                 </div>
                 </div>
