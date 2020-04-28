@@ -24,18 +24,18 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="coursecode" class="col-md-4 col-form-label text-md-right">{{ __('Course Code: ') }}</label>
+                            <label for="course_code" class="col-md-4 col-form-label text-md-right">{{ __('Course Code: ') }}</label>
 
                             <div class="col-md-6">
-                                <input id="coursecode" type="text" class="form-control" name="coursecode" value="" required autofocus>
+                                <input id="course_code" type="text" class="form-control" name="course_code" value="" required autofocus>
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="coursename" class="col-md-4 col-form-label text-md-right">{{ __('Course Name: ') }}</label>
+                            <label for="course_name" class="col-md-4 col-form-label text-md-right">{{ __('Course Name: ') }}</label>
 
                             <div class="col-md-6">
-                                <input id="coursename" type="text" class="form-control" name="coursename" value="" required autofocus>
+                                <input id="course_name" type="text" class="form-control" name="course_name" value="" required autofocus>
                             </div>
                         </div>
 

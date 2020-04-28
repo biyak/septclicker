@@ -25,6 +25,8 @@ class ElevationController extends Controller
             return redirect('/instructorhome');
         }
         $code = $request->get("code");
+        $course_code = $request->get("course_code");
+        $course_name = $request->get("course_name");
 
         // Get the elevation entry associated with this code
         $elevations = \App\Elevations::get()->where('code',$code)->all();
@@ -41,6 +43,14 @@ class ElevationController extends Controller
         $elevation->save();
         auth()->user()->instructor = 1;
         auth()->user()->save();
+
+        $data = request()->validate([
+            'course_code' => 'required',
+            'course_name' => 'required'
+        ]);
+
+        //need to get authenticated user and create a course for them
+        $course = auth()->user()->course()->create($data);
 
 
         return redirect('/instructorhome');

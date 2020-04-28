@@ -18,7 +18,7 @@ class CreateCoursesTable extends Migration
             $table->timestamps();
             $table->bigInteger('instructor_id')->unsigned();
             $table->string("course_name");
-            $table->string("course_description");
+            $table->string("course_code");
             $table->foreign('instructor_id')->references('id')->on('users');
         });
     }
