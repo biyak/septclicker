@@ -17,7 +17,7 @@
 
                     <!-- Usually you echo out  but we can also use two curly braces-->
                     <div class="card-deck">
-                    <a href="/studentquizlist/{{ Auth::user()->id }}" class="card img-fluid " style="height: 15rem">
+                    <a href="/quizlist/{{ Auth::user()->id }}" class="card img-fluid " style="height: 15rem">
                         <img class="card-img-top" >
                         <div class="card-img-overlay">
                             <h1 class="card-title">Quiz List</h1>
