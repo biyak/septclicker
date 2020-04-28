@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 
 class QuestionController extends Controller
 {
@@ -27,7 +28,7 @@ class QuestionController extends Controller
             'option_c' => '',
             'option_d' => '',
             'option_e' => '',
-
+            'testbankadd' => '',
         ]);
         //Takes the quiz we are working on tht was passed into the create function
         //Create a new question object with question()
@@ -36,7 +37,6 @@ class QuestionController extends Controller
             $imagePath = request('image')->store('uploads', 'public');
         }
         else {$imagePath = null;}
-
 
         $quiz->question()->create([
             'question_text' => $data['question_text'],
@@ -50,6 +50,13 @@ class QuestionController extends Controller
             'option_e' => $data['option_e'],
         ]);
 
+        if (isset($data['testbankadd'])){
+            $q  = DB::select('select * from questions where question_text = ?',array($data['question_text']));
+            $iid = auth()->user()->id;
+            $qid = $q[0]->id;
+
+            DB::insert('insert into test_bank (instructor_id,question_id) values (?,?)',array($iid,$qid));
+        }
 
         return view('instructorside.quiz.addquestion', compact('quiz'));
     }
