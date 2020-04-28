@@ -7,19 +7,40 @@
 
             <div class = "container">
                     <div class = "jumbotron">
-                        <div class= "row">
                                 <div class="col-md-8">
-                                    <h2> {{$quiz->quiz_name}} </h2>
+                                  <div class="row-title" >
+                                    <h2 style="display:inline;"> {{$quiz->quiz_name}} is
+                                      @if ($active == 1)
+                                    <b>  ACTIVE </b>
+                                      @else
+                                    <b>  INACTIVE </b>
+                                      @endif
+                                    </h2>
+                                </div>
+
                                         <p>Instructor: {{$quiz->user->name}} </p>
                                         <p> Weight: {{$quiz->quiz_weight}}%</p>
                                         <p> Total number of students attended: {{count($results)}}</p>
                                         <p> Refresh to see more responses. </p>
-                                        <a href ='responses/result' > <button type="button" class="btn btn-warning" >
-                                            See Results
-                                            </button>
-                                        </a>
+
+
                                 </div>
-                        </div>
+                                @if ($active == 1)
+                                <form method="post" action="" style="text-align:right;display:inline-block;">
+                                  @csrf
+                                  <input type="submit" class="btn btn-danger" name="stop_button" value="Stop Quiz"/>
+                                </form>
+                                @endif
+                                @if ($active == 0)
+                                <form method="post" action="" style="text-align:right;display:inline-block;">
+                                  @csrf
+                                <input type="submit" class="btn btn-primary" name="start_button" value= "Start Quiz"/>
+                                @endif
+                              </form>
+                              <a href ='responses/result' > <button type="button" class="btn btn-warning" >
+                                  See Results
+                              </button>
+                              </a>
                     </div>
                 </div>
 

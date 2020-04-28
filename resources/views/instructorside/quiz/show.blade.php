@@ -100,9 +100,9 @@ $num++
 <div class="container">
 <div class ="jumbotron">
 
-<a href = "{{$quiz->id}}/responses"> <button type="button" class="btn btn-primary" onclick="return confirm('Are you sure you want to proceed?')">
+<a href = "{{$quiz->id}}/responses"> <button type="button" class="btn btn-primary">
 
-                Go back
+                Go Back
            </button> </a>
 </div>
 </div>

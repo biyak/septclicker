@@ -63,6 +63,7 @@ class QuizController extends Controller
             return abort(403, "Only the creator of this quiz can view the results");
         }
 
+
         $results = array();
 
         $total = 0;
@@ -96,7 +97,8 @@ class QuizController extends Controller
 
         //show chart
         $charts = $this -> getCharts($quiz);
-        return view('instructorside/quizresponses/show', ['results' => $resolvedResults, 'total' => $total, 'questions' => $questions] + compact('quiz','charts'));
+        $active =  DB::table('quizzes')->select('active')->where('id', $quiz -> id)->get()[0]->active;
+        return view('instructorside/quizresponses/show', ['results' => $resolvedResults, 'total' => $total, 'questions' => $questions] + compact('quiz','charts', 'active'));
     }
 
     public function update(\App\Quiz $quiz){
@@ -131,20 +133,6 @@ class QuizController extends Controller
           $charts[$question->id] = $chart;
       }
 
-      // $result = DB::table('quizzes')->select('active')->where('id', $quiz -> id)->first();
-      // $stop = 1;
-      // if($result->active == 1 && $stop == 1) {
-      //   $quiz -> update(
-      //       ['active' => '0']
-      //   );
-      //   $button = ["Launch Quiz", "primary", "INACTIVE"];
-      //   return view('instructorside.quiz.responses', compact('button','charts','quiz'));
-      // }
-      // $quiz -> update(
-      //     ['active' => '1']
-      // );
-      // $button = ["Stop Quiz","danger","ACTIVE"];
-      // return view('instructorside.quiz.responses', compact('button','charts','quiz'));
       return $charts;
     }
 
@@ -223,5 +211,55 @@ class QuizController extends Controller
           }
           fclose($file);
       return response()->download($name, 'result.csv', $headers);
+    }
+
+    public function changeStatus(\App\Quiz $quiz){
+      $results = array();
+
+      $total = 0;
+
+      // Initialize everyone who attempted the quiz
+      foreach($quiz->attempts()->get() as $attempt){
+          $results[$attempt->student_id] = 0;
+      }
+
+      foreach($quiz->question()->get() as $question){
+          $total++;
+          foreach($question->attempts()->get() as $attempt){
+              if ($attempt->selected_answer === $question->question_ans){
+                  $results[$attempt->student_id] += 1;
+              }
+          }
+      }
+      $resolvedResults = array();
+
+      foreach($results as $sid => $grade){
+          $resolvedResults[\App\User::where('id',$sid)->get()[0]->name] = $grade;
+      }
+
+      $result = DB::table('quizzes')->select('active')->where('id', $quiz -> id)->first();
+      $active = $result -> active;
+      if(request()->stop_button) {
+        $change = request()->stop_button;
+      } else if(request()->start_button) {
+        $change = request()->start_button;
+      } else {
+        $change = 0;
+      }
+
+      if($result->active == 1 && $change === "Stop Quiz") {
+        $quiz -> update(
+            ['active' => 0]
+        );
+        $active = 0;
+      } else if ($result->active == 0 && $change === "Start Quiz") {
+        $quiz -> update(
+            ['active' => 1]
+        );
+        $active = 1;
+      }
+
+      $charts = $this->getCharts($quiz);
+      return view('instructorside.quizresponses.show', ['results'=>$resolvedResults]+compact('active','quiz','charts'));
     }
 }
