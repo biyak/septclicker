@@ -11,7 +11,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Welcome to your Instructor Dashboard, {{ Auth::user()->name }}!</div>    
+                <div class="card-header">Welcome to your Instructor Dashboard, {{ Auth::user()->name }}!</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -29,19 +29,11 @@
                         </div>
                     </a>
 
-                    <a href="/prlist" class="card img-fluid " style="height: 15rem">
-                        <img class="card-img-top" >
-                        <div class="card-img-overlay">
-                            <h1 class="card-title">Peer Review List</h1>
-
-                        </div>
-                    </a>
-
                 </div>
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 </div>
 </body>
 @endsection
