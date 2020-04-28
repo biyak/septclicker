@@ -221,6 +221,9 @@ class QuizController extends Controller
           ['deleted' => 1],
           ['active' => 0]
         );
+        DB::table('quizzes')
+          ->where('id',$quiz->id)
+          ->delete();
         $user = auth()->user();
         return view('instructorside/quiz/instructorquizlist', compact('user'));
       }
