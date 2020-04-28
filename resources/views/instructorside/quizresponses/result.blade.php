@@ -12,7 +12,7 @@
                                     <h2> "{{$quiz->quiz_name}}" Result</h2>
                                         <p>Instructor: {{$quiz->user->name}} </p>
                                         <p> Weight: {{$quiz->quiz_weight}}%</p>
-                                        <p> Total number of students attended: {{$numOfStudents}}</p>
+                                        <p> Total number of students attended: {{count($results)}}</p>
                                         <a href="result-csv"><button type="button" class="btn btn-primary" >
                                             Download Result
                                             </button>
@@ -34,17 +34,17 @@ $num=1
   <table class="table table-hover">
     <thead>
       <tr>
-        <th>Student ID</th>
+        <th>Student Name</th>
         <th>Grade</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
-@foreach($list as $student)
+@foreach($results as $student => $grade)
       <tr>
-        <td>{{$student['id']}}</td>
-        <td>{{$student['grade']*100}}%</td>
-        <td>{{$student['correct']}}/{{$student['total']}}</td>
+        <td>{{$student}}</td>
+        <td>{{round($grade/$total*100, 2)}}%</td>
+        <td>{{$grade}} / {{$total}}</td>
       </tr>
 @endforeach
 </tbody>
@@ -57,7 +57,7 @@ $num=1
 <!-- Button trigger modal -->
 <div class="container">
 <div class ="jumbotron">
-<a href = "../{{$quiz->id}}"> <button type="button" class="btn btn-primary">
+<a href = "../responses"> <button type="button" class="btn btn-primary">
 
                 Go Back
            </button> </a>

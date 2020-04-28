@@ -45,16 +45,13 @@ class QuizController extends Controller
 
     public function launch(\App\Quiz $quiz){
 
-      $data = request()->validate(
-          ['active' => '']
-      );
+      $result = DB::table('quizzes')->select('active')->where('id', $quiz -> id)->first();
+      $active = $result -> active;
 
-        $quiz -> update(
-            ['active' => '1']
-        );
-
-
-      return view('instructorside.quiz.launch', compact('quiz'));
+      if ($active==1) {
+        return view('instructorside.quiz.show', compact('quiz', 'active'));
+      }
+      return view('instructorside.quiz.launch', compact('quiz', 'active'));
     }
 
     public function responses(\App\Quiz $quiz){
@@ -62,6 +59,7 @@ class QuizController extends Controller
         if ($quiz->user_id !== auth()->user()->id){
             return abort(403, "Only the creator of this quiz can view the results");
         }
+
 
         $results = array();
 
@@ -94,7 +92,15 @@ class QuizController extends Controller
             $questions[$question->id] = $question->question_text;
         }
 
-        return view('instructorside/quizresponses/show', ['results' => $resolvedResults, 'total' => $total, 'questions' => $questions] + compact('quiz'));
+        //show chart
+        $charts = $this -> getCharts($quiz);
+        if(request()->launch_button) {
+           $quiz->update(
+             ['active'=>1]
+           );
+        }
+        $active =  DB::table('quizzes')->select('active')->where('id', $quiz -> id)->get()[0]->active;
+        return view('instructorside/quizresponses/show', ['results' => $resolvedResults, 'total' => $total, 'questions' => $questions] + compact('quiz','charts', 'active'));
     }
 
     public function update(\App\Quiz $quiz){
@@ -114,10 +120,10 @@ class QuizController extends Controller
         return redirect('q/'.$quiz->id);
     }
 
-    public function index(\App\Quiz $quiz) {
+    private function getCharts($quiz) {
       $charts = [];
       foreach($quiz->question()->get() as $question){
-          $sq = DB::table("submitted_questions")->select('selected_answer', DB::raw("COUNT(selected_answer) AS total"))->where("question_id", $question->id)->groupBy("selected_answer")->get();
+          $sq = DB::table("submitted_questions")->select('selected_answer', DB::raw("COUNT(selected_answer) AS total"))->where("question_id", "=",$question->id)->groupBy("selected_answer")->get();
           $chart = Charts::create('bar', 'highcharts')
                       ->title('Statistics')
                       ->labels($sq->pluck('selected_answer'))
@@ -129,93 +135,145 @@ class QuizController extends Controller
           $charts[$question->id] = $chart;
       }
 
-      $result = DB::table('quizzes')->select('active')->where('id', $quiz -> id)->first();
-      $stop = 1;
-      if($result->active == 1 && $stop == 1) {
-        $quiz -> update(
-            ['active' => '0']
-        );
-        $button = ["Launch Quiz", "primary", "INACTIVE"];
-        return view('instructorside.quiz.show', compact('button','charts','quiz'));
-      }
-      $quiz -> update(
-          ['active' => '1']
-      );
-      $button = ["Stop Quiz","danger","ACTIVE"];
-      return view('instructorside.quiz.show', compact('button','charts','quiz'));
-
+      return $charts;
     }
 
     public function result(\App\Quiz $quiz){
-      $list = [];
-      $attemptedQues = DB::table("quiz_attempts")->join("questions","quiz_attempts.quiz_id","=","questions.quiz_id")
-                ->join("question_attempts","question_attempts.question_id","=","questions.id")
-                ->select('question_attempts.student_id AS student_id',"questions.id AS question","selected_answer","question_ans")->where('questions.quiz_id',$quiz->id) -> get();
-      // $correctAnswers = DB::table("questions")->select("id","question_ans")->where("quiz_id", $quiz->id) -> get();
-      // $attemptedQuestions = DB::table("question_attempts")->select("question_id","student_id","selected_answer")->where("quiz_id")
-      $numOfQues = $attemptedQues->count("DISTINCT question");
-      $numOfStudents = $attemptedQues->count("DISTINCT student_id");
-      $ids = [];
-      $result = json_decode($attemptedQues, true);
-      foreach($result as $r) {
-        if(!in_array($r['student_id'], $ids)){
-          array_push($ids, $r['student_id']);
-        }
+
+      if ($quiz->user_id !== auth()->user()->id){
+          return abort(403, "Only the creator of this quiz can view the results");
       }
 
-      foreach($ids as $id) {
-        $correct = 0;
-        foreach($result as $r){
-          if($r['student_id'] == $id && $r['selected_answer'] == $r['question_ans']){
-            $correct++;
-          }
-        }
-        $list[$id] = ['id'=>$id,'grade'=> round($correct/$numOfQues,2), 'correct' => $correct, 'total' => $numOfQues];
+      $results = array();
+
+      $total = 0;
+
+      // Initialize everyone who attempted the quiz
+      foreach($quiz->attempts()->get() as $attempt){
+          $results[$attempt->student_id] = 0;
       }
-      return view('instructorside.quiz.result', compact('list','quiz','numOfStudents'));
+
+      foreach($quiz->question()->get() as $question){
+          $total++;
+          foreach($question->attempts()->get() as $attempt){
+              if ($attempt->selected_answer === $question->question_ans){
+                  $results[$attempt->student_id] += 1;
+              }
+          }
+      }
+
+      $resolvedResults = array();
+
+      foreach($results as $sid => $grade){
+          $resolvedResults[\App\User::where('id',$sid)->get()[0]->name] = $grade;
+      }
+
+      $charts = $this -> getCharts($quiz);
+      return view('instructorside.quizresponses.result', ['results' => $resolvedResults, 'total' => $total] + compact('quiz'));
     }
 
     public function download(\App\Quiz $quiz){
-      $list = [];
-      $attemptedQues = DB::table("quiz_attempts")->join("questions","quiz_attempts.quiz_id","=","questions.quiz_id")
-                ->join("question_attempts","question_attempts.question_id","=","questions.id")
-                ->select('question_attempts.student_id AS student_id',"questions.id AS question","selected_answer","question_ans")->where('questions.quiz_id',$quiz->id) -> get();
-      // $correctAnswers = DB::table("questions")->select("id","question_ans")->where("quiz_id", $quiz->id) -> get();
-      // $attemptedQuestions = DB::table("question_attempts")->select("question_id","student_id","selected_answer")->where("quiz_id")
-      $numOfQues = $attemptedQues->count("DISTINCT question");
-      $numOfStudents = $attemptedQues->count("DISTINCT student_id");
-      $ids = [];
-      $result = json_decode($attemptedQues, true);
-      foreach($result as $r) {
-        if(!in_array($r['student_id'], $ids)){
-          array_push($ids, $r['student_id']);
-        }
+      $results = array();
+
+      $total = 0;
+
+      // Initialize everyone who attempted the quiz
+      foreach($quiz->attempts()->get() as $attempt){
+          $results[$attempt->student_id] = 0;
       }
 
-      foreach($ids as $id) {
-        $correct = 0;
-        foreach($result as $r){
-          if($r['student_id'] == $id && $r['selected_answer'] == $r['question_ans']){
-            $correct++;
+      foreach($quiz->question()->get() as $question){
+          $total++;
+          foreach($question->attempts()->get() as $attempt){
+              if ($attempt->selected_answer === $question->question_ans){
+                  $results[$attempt->student_id] += 1;
+              }
           }
-        }
-        $list[$id] = ['id'=>$id,'grade'=> round($correct/$numOfQues,2), 'correct' => $correct, 'total' => $numOfQues];
+      }
+
+      $resolvedResults = array();
+
+      foreach($results as $sid => $grade){
+          $s = \App\User::select('id','name', 'email')->where('id',$sid)->get()[0];
+          $resolvedResults[\App\User::select('id')->where('id',$sid)->get()[0]->id] = ['id'=> $s-> id, 'grade'=>round($grade/$total,2), 'name'=> $s->name, 'email'=> $s->email];
       }
 
       $headers = array(
           "Content-type" => "text/csv"
       );
 
-      $columns = array('student_id', 'grade');
+      $columns = array('student_id', 'student_name', 'student_email', 'grade');
 
           $name = "result.csv";
           $file = fopen($name, 'w');
           fputcsv($file, $columns);
 
-          foreach($list as $s) {
-              fputcsv($file, array($s['id'],$s['grade']));
+          foreach($resolvedResults as $sid) {
+              fputcsv($file, array($sid['id'], $sid['name'], $sid['email'], $sid['grade']));
           }
           fclose($file);
       return response()->download($name, 'result.csv', $headers);
+    }
+
+    public function changeStatus(\App\Quiz $quiz){
+      $results = array();
+
+      $total = 0;
+
+      // Initialize everyone who attempted the quiz
+      foreach($quiz->attempts()->get() as $attempt){
+          $results[$attempt->student_id] = 0;
+      }
+
+      foreach($quiz->question()->get() as $question){
+          $total++;
+          foreach($question->attempts()->get() as $attempt){
+              if ($attempt->selected_answer === $question->question_ans){
+                  $results[$attempt->student_id] += 1;
+              }
+          }
+      }
+      $resolvedResults = array();
+
+      foreach($results as $sid => $grade){
+          $resolvedResults[\App\User::where('id',$sid)->get()[0]->name] = $grade;
+      }
+
+      $result = DB::table('quizzes')->select('active')->where('id', $quiz -> id)->first();
+      $active = $result -> active;
+      if(request()->stop_button) {
+        $change = request()->stop_button;
+      } else if(request()->start_button) {
+        $change = request()->start_button;
+      } else {
+        $change = 0;
+      }
+
+      if($result->active == 1 && $change === "Stop Quiz") {
+        $quiz -> update(
+            ['active' => 0]
+        );
+        $active = 0;
+      } else if ($result->active == 0 && $change === "Start Quiz") {
+        $quiz -> update(
+            ['active' => 1]
+        );
+        $active = 1;
+      }
+
+      $charts = $this->getCharts($quiz);
+      return view('instructorside.quizresponses.show', ['results'=>$resolvedResults]+compact('active','quiz','charts'));
+    }
+
+    public function delete(\App\Quiz $quiz){
+      $question_id = request()->question_id;
+      foreach($quiz -> question() -> get() as $question) {
+        if($question->id == $question_id) {
+          $question->update(
+              ['quiz_id' => 0]
+            );
+        }
+      }
+      return view('instructorside.quiz.show', compact('quiz'));
     }
 }

@@ -9,7 +9,7 @@
                     <div class = "jumbotron">
                         <div class= "row">
                                 <div class="col-md-8">
-                                    <h2> {{$quiz->quiz_name}} is now ACTIVE</h2>
+                                    <h2> {{$quiz->quiz_name}}</h2>
                                         <p>Instructor: {{$quiz->user->name}} </p>
                                         <p> Weight: {{$quiz->quiz_weight}}%</p>
                                         <p> Select questions to update or add more questions: </p>
@@ -84,15 +84,6 @@ $num=1
                 Correct answer: {{$question->question_ans}}
             </p>
           </div>
-          <div class="box">
-            <div class="body">
-              {!! $charts[$question->id]->html() !!}
-            </div>
-          </div>
-          {!! Charts::scripts() !!}
-          {!! $charts[$question->id]->script() !!}
-                  <br>
-                  <br>
         </div>
       </div>
 @php
@@ -106,11 +97,17 @@ $num++
 <!-- Button trigger modal -->
 <div class="container">
 <div class ="jumbotron">
-<a href = "../{{$quiz->id}}?stop=1"> <button type="button" class="btn btn-primary" onclick="return confirm('Are you sure to stop the quiz?')">
 
-                Stop Quiz
+  <form method="post" action="../{{$quiz->id}}/responses" onclick="return confirm('Are you sure to launch the quiz?')">
+    @csrf
+  <input type="submit" class="btn btn-primary" name="start_button" value= "Start Quiz"/>
+  <script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+      }
+    </script>
+</form>
 
-           </button> </a>
 </div>
 </div>
 

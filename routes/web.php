@@ -46,14 +46,15 @@ Route::get('/q/{quiz}/launch', 'QuizController@launch')->name('{quiz}.launch')->
 Route::get('/q/create', 'QuizController@create')->middleware("BlockStudents");
 Route::post('/q', 'QuizController@store')->middleware("BlockStudents");
 Route::get('/q/{quiz}', 'QuizController@show')->middleware("BlockStudents");
-Route::get('/q/{quiz}', 'QuizController@index')->middleware("BlockStudents");
-Route::get('/q/{quiz}/launch', 'QuizController@index')->name('{quiz}.launch')->middleware("BlockStudents");
+Route::post('/q/{quiz}', 'QuizController@delete')->middleware("BlockStudents");
+
 //Editing quiz
 Route::get('/q/{quiz}/edit', 'QuizController@edit')->name('{quiz}.edit')->middleware("BlockStudents");
 Route::patch('/q/{quiz}/', 'QuizController@update')->name('{quiz}.update')->middleware("BlockStudents");
 //See quiz result
-Route::get('/q/{quiz}/result','QuizController@result')->name('{quiz}.result')->middleware("BlockStudents");
-Route::get('/q/{quiz}/result-csv','QuizController@download')->name('{quiz}.download')->middleware("BlockStudents");
+Route::get('/q/{quiz}/responses/result','QuizController@result')->name('{quiz}.result')->middleware("BlockStudents");
+Route::get('/q/{quiz}/responses/result-csv','QuizController@download')->name('{quiz}.download')->middleware("BlockStudents");
+Route::post('/q/{quiz}/responses','QuizController@changeStatus')->name('{quiz}.changeStatus')->middleware("BlockStudents");
 
 //Creating and displaying questions
 Route::get('{quiz}/question/create', 'QuestionController@create')->middleware("BlockStudents");
@@ -66,6 +67,7 @@ Route::patch('{quiz}/question/{question}', 'QuestionController@update')->name('{
 
 // Seeing quiz responses
 Route::get('/q/{quiz}/responses', 'QuizController@responses')->name('{quiz}.responses');
+Route::post('/q/{quiz}/responses', 'QuizController@changeStatus')->name('{quiz}.changeStatus');
 
 //Live quizzes
 Route::get('{quiz}/question/{question}/live', 'SubmittedQuestionController@live')->name('{question}.live');
