@@ -9,17 +9,13 @@
                     <div class = "jumbotron">
                         <div class= "row">
                                 <div class="col-md-8">
-                                    <h2> {{$quiz->quiz_name}} is {{$button[2]}}</h2>
+                                    <h2> {{$quiz->quiz_name}}</h2>
                                         <p>Instructor: {{$quiz->user->name}} </p>
                                         <p> Weight: {{$quiz->quiz_weight}}%</p>
                                         <p> Select questions to update or add more questions: </p>
 
                                         <a href ='../{{$quiz->id}}/question/create' > <button type="button" class="btn btn-primary" >
                                             Add Questions
-                                            </button>
-                                        </a>
-                                        <a href ='{{$quiz->id}}/result' > <button type="button" class="btn btn-warning" >
-                                            See Results
                                             </button>
                                         </a>
                                 </div>
@@ -84,19 +80,12 @@ $num=1
                     e) {{$question->option_e}}
                 </p>
                 @endif
-            <p>
-                Correct answer: {{$question->question_ans}}
+            <p style="color:blue;">
+                <b>Correct answer: {{$question->question_ans}} </b>
             </p>
+            <br>
+            <br>
           </div>
-            <div class="box">
-              <div class="body">
-                {!! $charts[$question->id]->html() !!}
-              </div>
-            </div>
-            {!! Charts::scripts() !!}
-            {!! $charts[$question->id]->script() !!}
-                    <br>
-                    <br>
         </div>
       </div>
 @php
@@ -111,9 +100,9 @@ $num++
 <div class="container">
 <div class ="jumbotron">
 
-<a href = ""> <button type="button" class="btn btn-{{$button[1]}}" onclick="return confirm('Are you sure you want to proceed?')">
+<a href = "{{$quiz->id}}/responses"> <button type="button" class="btn btn-primary" onclick="return confirm('Are you sure you want to proceed?')">
 
-                {{$button[0]}}
+                Go back
            </button> </a>
 </div>
 </div>
