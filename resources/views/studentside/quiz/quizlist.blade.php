@@ -14,7 +14,7 @@
 
                      </h3>
                      <table id="activequiztable"  style = "display:block;">
-                    @foreach($quizzes as $quiz)
+                    @foreach($user->quiz as $quiz)
                         @if($quiz->deleted == 0 && $quiz->active==1)
                         <tr>
                             <td>
