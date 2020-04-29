@@ -289,6 +289,7 @@ class QuizControllerTest extends TestCase
       $response = $this->actingAs($this->testInstructor)->post('/q/' . $quiz->id . '/responses',
        ['delete_button'=>"Delete Quiz", 'quiz' => $quiz])->assertStatus(200);
        $this->assertDatabaseMissing('quizzes', ['id'=>$quiz->id]);
+       $response->assertDontSeeText('test_quiz');
     }
 
     /**
