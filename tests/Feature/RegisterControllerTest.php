@@ -17,4 +17,9 @@ class RegisterControllerTest extends TestCase
         $this->testingUser = factory(\App\User::class)->create(['instructor' => 0]);
 
     }
+
+    public function test()
+    {
+        $this->assertTrue(True);
+    }
 }
