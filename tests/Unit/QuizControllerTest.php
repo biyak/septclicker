@@ -41,6 +41,8 @@ class QuizControllerTest extends TestCase
         $this->question = $question;
         $this->testUser = factory(\App\User::class)->create(['instructor' => 0]);
         $this->clientTimeIndex = 1;
+
+        $this->testInstructor = factory(\App\User::class)->create(['instructor' => 1, 'id' => 12]);
     }
 
     /**
@@ -246,5 +248,123 @@ class QuizControllerTest extends TestCase
         $this->answerQuestion('c')->assertJson(['success' => True]);
         $this->answerQuestion('e')->assertJson(['success' => False]);
         $this->assertEquals('c',$this->getQuestionAttempt()->selected_answer);
+    }
+
+    /**
+    * Check the created quiz from the database
+    */
+    public function testInsertToDatabaseQuizzes() {
+        $quiz = factory(\App\Quiz::class)->create([
+          'quiz_name'=>'test_quiz',
+          'timelimit'=>'60000'
+        ]);
+        $this->assertDatabaseHas('quizzes', ['quiz_name' => 'test_quiz', 'timelimit'=>'60000']);
+    }
+
+    /**
+    * Check the created question from the database
+    */
+    public function testInDatabaseQuestions() {
+      $quiz = factory(\App\Quiz::class)->create();
+      $question = factory(\App\Question::class)->create([
+          'question_text' => "What is the name of the instructor?",
+          'option_a' => 'Sam',
+          'option_b' => 'Jack',
+          'option_c' => 'Jay',
+          'option_d' => 'None of the above',
+          'option_e' => NULL,
+          'question_ans' => 'a',
+          'quiz_id' => $quiz->id
+      ]);
+      $this->assertDatabaseHas('questions', ['question_text' => 'What is the name of the instructor?']);
+    }
+
+    /**
+    * Check the deleted quiz is removed from the database
+    */
+    public function testDeleteQuizFromDatabase() {
+      $quiz = factory(\App\Quiz::class)->create([
+        'quiz_name'=>'test_quiz'
+      ]);
+      $response = $this->actingAs($this->testInstructor)->post('/q/' . $quiz->id . '/responses',
+       ['delete_button'=>"Delete Quiz", 'quiz' => $quiz])->assertStatus(200);
+       $this->assertDatabaseMissing('quizzes', ['id'=>$quiz->id]);
+    }
+
+    /**
+    * Check the deleted question is remove from the quiz by removing the quiz_id = 0
+    */
+    public function testRemoveQuestionFromQuiz() {
+      $quiz = factory(\App\Quiz::class)->create(['id'=>100]);
+      $question = factory(\App\Question::class)->create([
+          'question_text' => "What is ?",
+          'option_a' => 'Sam',
+          'option_b' => 'Jack',
+          'option_c' => 'Jay',
+          'option_d' => 'None of the above',
+          'option_e' => NULL,
+          'question_ans' => 'a',
+          'quiz_id' => $quiz->id
+      ]);
+      $response = $this->actingAs($this->testInstructor)->call('POST','/q/' . $quiz->id,
+       ['delete_question'=>"Delete", 'question_id'=>$question->id,'quiz' => $quiz]);
+       $this->assertDatabaseHas('questions', ['quiz_id'=>0]);
+    }
+
+    /**
+    * Check the added question is inserted to the existing quiz
+    */
+    public function testAddQuestionToQuiz() {
+      $quiz = factory(\App\Quiz::class)->create();
+      $question = factory(\App\Question::class)->create([
+          'question_text' => "What is ?",
+          'option_a' => 'Sam',
+          'option_b' => 'Jack',
+          'option_c' => 'Jay',
+          'option_d' => 'None of the above',
+          'option_e' => NULL,
+          'question_ans' => 'a',
+          'quiz_id' => $quiz->id
+      ]);
+      $question2 = factory(\App\Question::class)->create([
+          'question_text' => "question2?",
+          'option_a' => 'Dad',
+          'option_b' => 'Jack',
+          'option_c' => 'Jay',
+          'option_d' => 'None of the above',
+          'option_e' => NULL,
+          'question_ans' => 'a',
+          'quiz_id' => $quiz->id
+      ]);
+      $this->assertDatabaseHas('questions', ['quiz_id'=>$quiz->id, 'question_text'=>"What is ?", 'option_a'=>"Sam"]);
+      $this->assertDatabaseHas('questions', ['quiz_id'=>$quiz->id, 'question_text'=>"question2?", 'option_a'=>"Dad"]);
+    }
+
+    /**
+    * Check the editted question is updated
+    */
+    public function testEditQuiz() {
+      $quiz = factory(\App\Quiz::class)->create();
+      $question = factory(\App\Question::class)->create([
+          'question_text' => "What is ?",
+          'option_a' => 'Sam',
+          'option_b' => 'Jack',
+          'option_c' => 'Jay',
+          'option_d' => 'None of the above',
+          'option_e' => NULL,
+          'question_ans' => 'a',
+          'quiz_id' => $quiz->id
+      ]);
+      $question -> update([
+          'question_text' => "What is what?",
+          'option_a' => 'Sam',
+          'option_b' => 'Jack',
+          'option_c' => 'Jay',
+          'option_d' => 'None of the above',
+          'option_e' => NULL,
+          'question_ans' => 'b',
+          'quiz_id' => $quiz->id
+      ]);
+      $this->assertDatabaseHas('questions', ['quiz_id'=>$quiz->id, 'question_text'=>"What is what?", 'question_ans'=>"b"]);
     }
 }

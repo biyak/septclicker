@@ -46,7 +46,7 @@ Route::get('/q/{quiz}/launch', 'QuizController@launch')->name('{quiz}.launch')->
 Route::get('/q/create', 'QuizController@create')->middleware("BlockStudents");
 Route::post('/q', 'QuizController@store')->middleware("BlockStudents");
 Route::get('/q/{quiz}', 'QuizController@show')->middleware("BlockStudents");
-Route::post('/q/{quiz}', 'QuizController@delete')->middleware("BlockStudents");
+Route::post('/q/{quiz}', 'QuizController@delete')->name('{quiz}.delete')->middleware("BlockStudents");
 
 //Editing quiz
 Route::get('/q/{quiz}/edit', 'QuizController@edit')->name('{quiz}.edit')->middleware("BlockStudents");
