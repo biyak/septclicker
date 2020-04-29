@@ -41,7 +41,7 @@ class ElevationTest extends TestCase
      */
     public function testElevateElevationWorks()
     {
-        $this->actingAs($this->testingUser)->call('POST','/elevate',['code' => 'SuperSecretCode'])->assertRedirect('/instructorhome');
+        $this->actingAs($this->testingUser)->call('POST','/elevate',['code' => 'SuperSecretCode','course_code' => '4AM2', 'course_name' => 'Advanced Testing'])->assertRedirect('/instructorhome');
         $this->assertEquals(1, $this->testingUser->instructor);
         $this->elevation->refresh();
         $this->assertEquals(True, $this->elevation->used);
@@ -62,7 +62,7 @@ class ElevationTest extends TestCase
     public function testElevatePOSTRedirectionWorks()
     {
         $this->testingUser->instructor = 1;
-        $this->actingAs($this->testingUser)->call('POST','/elevate',['code' => 'ThisISNotAValidCode'])->assertRedirect('/instructorhome');
+        $this->actingAs($this->testingUser)->call('POST','/elevate',['code' => 'ThisISNotAValidCode','course_code' => '4AM2', 'course_name' => 'Advanced Testing'])->assertRedirect('/instructorhome');
     }
 
     /**
@@ -70,7 +70,7 @@ class ElevationTest extends TestCase
      */
     public function testElevateInvalidCodeFails()
     {
-        $request = $this->actingAs($this->testingUser)->call('POST','/elevate',['code' => 'WrongCode']);
+        $request = $this->actingAs($this->testingUser)->call('POST','/elevate',['code' => 'WrongCode', 'course_code' => '4AM2', 'course_name' => 'Advanced Testing']);
         $request->assertStatus(200);
         $request->assertSee("This code is invalid");
         $this->assertEquals(0, $this->testingUser->instructor);
@@ -81,7 +81,7 @@ class ElevationTest extends TestCase
      */
     public function testElevateDoubleUseFails()
     {
-        $this->actingAs($this->testingUser)->call('POST','/elevate',['code' => 'SuperSecretCode'])->assertRedirect('/instructorhome');
+        $this->actingAs($this->testingUser)->call('POST','/elevate',['code' => 'SuperSecretCode', 'course_code' => '4AM2', 'course_name' => 'Advanced Testing'])->assertRedirect('/instructorhome');
         $this->assertEquals(1, $this->testingUser->instructor);
         $this->elevation->refresh();
         $this->assertEquals(True, $this->elevation->used);
