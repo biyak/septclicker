@@ -5,9 +5,9 @@
     <body>
 
 
-    <div class = "container">
-        <div class = "jumbotron">
-            <div class= "row">
+    <div class="container">
+        <div class="jumbotron">
+            <div class="row">
                 <div class="col-md-8">
                     <h2> {{$quiz->quiz_name}} </h2>
                     <p>Instructor: {{$quiz->user->name}} </p>
@@ -19,7 +19,7 @@
     </div>
 
     </div>
-    <div class = "container">
+    <div class="container">
         <div class="jumbotron">
             <div class="col-md-8">
                 <!-- The Quiz itself-->
@@ -27,7 +27,7 @@
                     $num=1
                 @endphp
                 @foreach($question -> submittedquestion as $question)
-                    <div >
+                    <div>
                     <!-- <a href="/{{$quiz->id}}/question/{{$question->id}}/edit" > -->
                         {{$question -> user_id}} has answered {{$question -> selected_answer}}
                     </div>
@@ -41,11 +41,13 @@
     </div>
     <!-- Button trigger modal -->
     <div class="container">
-        <div class ="jumbotron">
-            <a href = "/q/{{$quiz->id}}/responses"> <button type="button" class="btn btn-primary" >
+        <div class="jumbotron">
+            <a href="/q/{{$quiz->id}}/responses">
+                <button type="button" class="btn btn-primary">
 
                     Back to Results
-                </button> </a>
+                </button>
+            </a>
         </div>
     </div>
 
@@ -54,9 +56,7 @@
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
 
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-
 
 
     </body>
