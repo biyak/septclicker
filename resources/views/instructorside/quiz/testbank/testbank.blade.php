@@ -27,7 +27,7 @@
 
     <script>
         //Keep track of selected questions
-        const selectedQuestions = new Set();
+        const selectedQuestions = [];
     </script>
 
     @php
@@ -88,10 +88,13 @@
 
             if (bg == 'lightgreen') {
                 (this).style.backgroundColor = "lightgrey";
-                selectedQuestions.delete(num);
+                const index = selectedQuestions.indexOf(num);
+                selectedQuestions.splice(index,1);
+                console.log(selectedQuestions);
             } else {
                 (this).style.backgroundColor = "lightgreen";
-                selectedQuestions.add(num);
+                selectedQuestions.push(num);
+                console.log(selectedQuestions);
             }
         });
     </script>
@@ -115,10 +118,17 @@
     <div class="container">
         <div class="jumbotron">
             <div class="row">
-                <button type="button" class="btn btn-primary btn-space" data-toggle="modal" data-target="#exampleModal">
-                    Create Quiz
-                </button>
+                
                 <!-- <iframe src="AddQuestion.html" height="300" width=100%></iframe> -->
+                <form action="/testbank/create" method="post" enctype="multipart/form-data">
+                    @csrf
+                    <input id="qIDs" name="qIDs" type="hidden" value='yes'>
+                    <script>document.getElementById('qIDs').value = selectedQuestions.toString();</script>
+                        
+                    <button type="button" class="btn btn-primary btn-space" data-toggle="modal" data-target="#exampleModal">
+                        Create Quiz
+                    </button>
+                </form>
             </div>
         </div>
     </div>
@@ -140,11 +150,17 @@
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Review Selection</button>
-                    <a href="CreateNewQuiz.html">
-                        <button type="button" id="submit" class="btn btn-primary">
+                    <form action="/testbank/create" method="post" enctype="multipart/form-data">
+                    @csrf
+                        <input id="qIDs" name="qIDs" type="hidden" value='yes'>
+                        <script>
+                            document.getElementById('qIDs').value = selectedQuestions.toString();
+                        </script>
+                        
+                        <button type="submit" class="btn btn-primary" align="right">
                             Create Quiz
                         </button>
-                    </a>
+                    </form>
                 </div>
             </div>
         </div>

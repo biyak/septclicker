@@ -124,14 +124,6 @@ class QuestionController extends Controller
             }
         }
 
-        //if (isset($data['testbankadd'])){
-           // $q  = DB::select('select * from questions where (question_text,question_ans) = (?,?)',array($data['question_text'],$data['question_ans']));
-            //$iid = auth()->user()->id;
-            //$qid = $q[0]->id;
-
-            //DB::insert('insert into test_bank (instructor_id,question_id) values (?,?)',array($iid,$qid));
-        //}
-
         
         //auth()->user()->quiz()->update($data);
 
