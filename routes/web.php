@@ -27,6 +27,8 @@ Route::get('/quizlist/{user}', 'QuizListController@index')->name('QuizList');
 
 Route::get('/quiztest', 'QuizTestController@index')->name('QuizTest');
 
+Route::get('/registercompleted', 'RegistrationCompleteController@completedpage')->name('RegisterCompleted');
+
 Route::get('/prlist', 'PRListController@index')->name('PRList');
 
 Route::get('/peerreview', 'PeerReviewController@index')->name('PeerReview');
